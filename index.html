@@ -157,34 +157,56 @@
 
         // Función para cargar elementos
         function loadPage() {
-            // Imagen y perfil
-            document.querySelector('.profile-image').src = CONFIG.profileImage;
-            document.querySelector('.profile-name').textContent = CONFIG.name;
-            document.querySelector('.profile-bio').textContent = CONFIG.bio;
+    // Imagen y perfil
+    document.querySelector('.profile-image').src = CONFIG.profileImage;
+    document.querySelector('.profile-name').textContent = CONFIG.name;
+    document.querySelector('.profile-bio').textContent = CONFIG.bio;
 
-            // Cargar enlaces
-            const linksContainer = document.getElementById('links');
-            CONFIG.links.forEach(link => {
-                const linkEl = document.createElement('a');
-                linkEl.href = link.url;
-                linkEl.className = 'link';
-                linkEl.target = '_blank';
-                linkEl.innerHTML = `${link.icon} ${link.title}`;
-                linksContainer.appendChild(linkEl);
-            });
+    // Cargar enlaces
+    const linksContainer = document.getElementById('links');
+    CONFIG.links.forEach(link => {
+        const linkEl = document.createElement('a');
+        linkEl.href = link.url;
+        linkEl.className = 'link';
+        linkEl.target = '_blank';
+        
+        // Create a container for icon and text
+        const contentContainer = document.createElement('div');
+        contentContainer.style.display = 'flex';
+        contentContainer.style.alignItems = 'center';
+        contentContainer.style.justifyContent = 'center';
+        contentContainer.style.gap = '10px'; // Space between icon and text
 
-            // Cargar enlaces sociales
-            const socialLinksContainer = document.getElementById('social-links');
-            CONFIG.socialLinks.forEach(social => {
-                const socialEl = document.createElement('a');
-                socialEl.href = social.url;
-                socialEl.className = 'social-link';
-                socialEl.target = '_blank';
-                socialEl.innerHTML = social.icon;
-                socialEl.title = social.platform;
-                socialLinksContainer.appendChild(socialEl);
-            });
+        // Add icon if exists
+        if (link.icon) {
+            const iconContainer = document.createElement('span');
+            iconContainer.innerHTML = link.icon;
+            iconContainer.style.display = 'flex';
+            iconContainer.style.alignItems = 'center';
+            contentContainer.appendChild(iconContainer);
         }
+
+        // Add text
+        const textSpan = document.createElement('span');
+        textSpan.textContent = link.title;
+        contentContainer.appendChild(textSpan);
+
+        linkEl.appendChild(contentContainer);
+        linksContainer.appendChild(linkEl);
+    });
+
+    // Cargar enlaces sociales (previous code remains the same)
+    const socialLinksContainer = document.getElementById('social-links');
+    CONFIG.socialLinks.forEach(social => {
+        const socialEl = document.createElement('a');
+        socialEl.href = social.url;
+        socialEl.className = 'social-link';
+        socialEl.target = '_blank';
+        socialEl.innerHTML = social.icon;
+        socialEl.title = social.platform;
+        socialLinksContainer.appendChild(socialEl);
+    });
+            }
 
         // Cargar la página al iniciarse
         document.addEventListener('DOMContentLoaded', loadPage);
