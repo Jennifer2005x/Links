@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mis enlaces</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --link-bg: #2c2c2c;
+            --link-hover: #3c3c3c;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 480px;
+        }
+
+        .profile {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-image {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ffffff;
+        }
+
+        .profile-name {
+            margin-top: 15px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .profile-bio {
+            color: #aaaaaa;
+            margin-top: 10px;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .link {
+            background-color: var(--link-bg);
+            color: var(--text-color);
+            text-decoration: none;
+            padding: 15px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .link:hover {
+            background-color: var(--link-hover);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .social-link {
+            color: #ffffff;
+            text-decoration: none;
+            font-size: 24px;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+        }
+
+        .social-link:hover {
+            opacity: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile">
+            <img src="/api/placeholder/120/120" alt="Profile" class="profile-image">
+            <div class="profile-name">Tu Nombre</div>
+            <div class="profile-bio">Breve descripción sobre ti</div>
+        </div>
+
+        <div class="links" id="links">
+            <!-- Los enlaces se generarán dinámicamente -->
+        </div>
+
+        <div class="social-links" id="social-links">
+            <!-- Los enlaces sociales se generarán dinámicamente -->
+        </div>
+    </div>
+
+    <script>
+        // Configuración - PERSONALIZA AQUÍ
+        const CONFIG = {
+            profileImage: '/api/placeholder/120/120', // URL de tu imagen
+            name: 'Jennifer',
+            bio: 'Una Chica Rara',
+            links: [
+                { 
+                    title: 'Mi Sitio Web', 
+                    url: 'https://tudominio.com',
+                    icon: '🌐'
+                },
+                { 
+                    title: 'Blog', 
+                    url: 'https://tublog.com',
+                    icon: '✍️'
+                },
+                { 
+                    title: 'Mi Portafolio', 
+                    url: 'https://miportafolio.com',
+                    icon: '💼'
+                }
+            ],
+            socialLinks: [
+                { 
+                    platform: 'GitHub', 
+                    url: 'https://github.com/tuusuario',
+                    icon: '🐙'
+                },
+                { 
+                    platform: 'Twitter', 
+                    url: 'https://twitter.com/tuusuario',
+                    icon: '🐦'
+                },
+                { 
+                    platform: 'LinkedIn', 
+                    url: 'https://linkedin.com/in/tuusuario',
+                    icon: '💼'
+                }
+            ]
+        };
+
+        // Función para cargar elementos
+        function loadPage() {
+            // Imagen y perfil
+            document.querySelector('.profile-image').src = CONFIG.profileImage;
+            document.querySelector('.profile-name').textContent = CONFIG.name;
+            document.querySelector('.profile-bio').textContent = CONFIG.bio;
+
+            // Cargar enlaces
+            const linksContainer = document.getElementById('links');
+            CONFIG.links.forEach(link => {
+                const linkEl = document.createElement('a');
+                linkEl.href = link.url;
+                linkEl.className = 'link';
+                linkEl.target = '_blank';
+                linkEl.innerHTML = `${link.icon} ${link.title}`;
+                linksContainer.appendChild(linkEl);
+            });
+
+            // Cargar enlaces sociales
+            const socialLinksContainer = document.getElementById('social-links');
+            CONFIG.socialLinks.forEach(social => {
+                const socialEl = document.createElement('a');
+                socialEl.href = social.url;
+                socialEl.className = 'social-link';
+                socialEl.target = '_blank';
+                socialEl.innerHTML = social.icon;
+                socialEl.title = social.platform;
+                socialLinksContainer.appendChild(socialEl);
+            });
+        }
+
+        // Cargar la página al iniciarse
+        document.addEventListener('DOMContentLoaded', loadPage);
+    </script>
+</body>
+</html>
