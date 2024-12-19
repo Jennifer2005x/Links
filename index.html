@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mis enlaces</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
-    <script src="https://unpkg.com/@heroicons/react@1.0.0/dist/heroicons.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         :root {
             --bg-color-dark: #121212;
@@ -99,11 +99,6 @@
         .social-link:hover {
             opacity: 1;
         }
-
-        .icon {
-            width: 24px;
-            height: 24px;
-        }
     </style>
 </head>
 <body>
@@ -124,7 +119,7 @@
     </div>
 
     <script>
-        // Configuración con íconos de Heroicons
+        // Configuración con íconos de Font Awesome
         const CONFIG = {
             profileImage: 'https://i.postimg.cc/rpSfZQ8f/b3cb94e8275b13a4.png',
             name: 'Jennifer',
@@ -133,39 +128,39 @@
                 { 
                     title: 'Mastodon', 
                     url: 'https://tkz.one/@Jennifer2005x',
-                    icon: '<svg class="icon"><use href="#heroicons-outline-hashtag"></use></svg>'
+                    icon: '<i class="fab fa-mastodon"></i>'
                 },
                 { 
                     title: 'Telegram', 
                     url: 'https://t.me/Jennifer2005xx',
-                    icon: '<svg class="icon"><use href="#heroicons-outline-chat"></use></svg>'
+                    icon: '<i class="fab fa-telegram"></i>'
                 },
                 { 
                     title: 'AniList', 
                     url: 'https://anilist.co/user/7014868',
-                    icon: '<svg class="icon"><use href="#heroicons-outline-book-open"></use></svg>'
+                    icon: '<i class="fas fa-book"></i>'
                 },
                 {   
                     title: 'Loops',
                     url: 'https://loops.video/@Jennifer2005x',
-                    icon: '<svg class="icon"><use href="#heroicons-outline-repeat"></use></svg>'
+                    icon: '<i class="fas fa-infinity"></i>'
                 },
                 {   
                     title: 'Logros',
                     url: 'https://retroachievements.org/user/KTJainer22',
-                    icon: '<svg class="icon"><use href="#heroicons-outline-trophy"></use></svg>'
+                    icon: '<i class="fas fa-trophy"></i>'
                 },
                 {   
                     title: 'Simkl',
                     url: 'https://simkl.com/5732000/dashboard/',
-                    icon: '<svg class="icon"><use href="#heroicons-outline-film"></use></svg>'
+                    icon: '<i class="fas fa-film"></i>'
                 }
             ],
             socialLinks: [
                 { 
                     platform: 'GitHub', 
                     url: 'https://github.com/Jennifer2005x',
-                    icon: '<svg class="icon"><use href="#heroicons-outline-code"></use></svg>'
+                    icon: '<i class="fab fa-github"></i>'
                 }
             ]
         };
