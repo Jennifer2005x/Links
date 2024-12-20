@@ -131,7 +131,6 @@
     </div>
 
     <script>
-    // Configuración con íconos de Font Awesome
     const CONFIG = {
         profileImage: 'https://i.postimg.cc/rpSfZQ8f/b3cb94e8275b13a4.png',
         name: 'Jennifer',
@@ -182,14 +181,11 @@
         ]
     };
 
-        // Función para cargar elementos
         function loadPage() {
-            // Imagen y perfil
             document.querySelector('.profile-image').src = CONFIG.profileImage;
             document.querySelector('.profile-name').textContent = CONFIG.name;
             document.querySelector('.profile-bio').textContent = CONFIG.bio;
 
-            // Cargar enlaces
             const linksContainer = document.getElementById('links');
             CONFIG.links.forEach(link => {
                 const linkEl = document.createElement('a');
@@ -197,14 +193,12 @@
                 linkEl.className = 'link';
                 linkEl.target = '_blank';
                 
-                // Crear un contenedor para el icono y el texto
                 const contentContainer = document.createElement('div');
                 contentContainer.style.display = 'flex';
                 contentContainer.style.alignItems = 'center';
                 contentContainer.style.justifyContent = 'center';
                 contentContainer.style.gap = '10px'; // Espacio entre icono y texto
 
-                // Añadir icono si existe
                 if (link.icon) {
                     const iconContainer = document.createElement('span');
                     iconContainer.innerHTML = link.icon;
@@ -213,7 +207,6 @@
                     contentContainer.appendChild(iconContainer);
                 }
 
-                // Añadir texto
                 const textSpan = document.createElement('span');
                 textSpan.textContent = link.title;
                 contentContainer.appendChild(textSpan);
@@ -222,7 +215,6 @@
                 linksContainer.appendChild(linkEl);
             });
 
-            // Cargar enlaces sociales
             const socialLinksContainer = document.getElementById('social-links');
             CONFIG.socialLinks.forEach(social => {
                 const socialEl = document.createElement('a');
@@ -235,7 +227,6 @@
             });
         }
 
-        // Función para aplicar el tema
         function applyTheme(theme) {
             const root = document.documentElement;
             if (theme === 'dark') {
@@ -251,14 +242,12 @@
             }
         }
 
-        // Detectar el esquema de color preferido del usuario
         const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         applyTheme(darkModeMediaQuery.matches ? 'dark' : 'light');
         darkModeMediaQuery.addEventListener('change', (e) => {
             applyTheme(e.matches ? 'dark' : 'light');
         });
 
-        // Cargar la página al iniciarse
         document.addEventListener('DOMContentLoaded', loadPage);
     </script>
 </body>
