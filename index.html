@@ -3,19 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mis enlaces</title>
-    <link rel="icon" type="image/png" href="https://i.postimg.cc/nz34F4Yb/1000008866-modified.png">
+    <title>Test - Enlaces</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
-    <!-- Open Graph -->
-    <meta property="og:title" content="Mis Enlaces">
-    <meta property="og:description" content="Enlaces De Jenny ^^ (Osea Yo)">
-    <meta property="og:image" content="https://i.postimg.cc/jSvPQ6mW/1000008870.png">
-    <meta property="og:url" content="https://jennifer2005x.github.io/Links/">
-
-    <!-- Verificación de Mastodon -->
-    <link rel="me" href="https://tkz.one/@Jennifer2005x">
 
     <style>
         :root {
@@ -154,58 +144,48 @@
             background-color: var(--link-hover);
         }
 
-        #overlay-button svg {
-            width: 16px;
-            height: 16px;
-            display: inline-flex;
-            vertical-align: middle;
+        .github-lists {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+            padding: 0 20px;
         }
 
-        #overlay-button span {
-            display: inline-flex;
+        .github-button {
+            background-color: var(--link-bg-dark);
+            color: var(--text-color-dark);
+            text-decoration: none;
+            padding: 15px 25px;
+            border-radius: 10px;
+            text-align: center;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid #444;
+            display: flex;
             align-items: center;
+            justify-content: center;
+            gap: 12px;
+            font-size: 1.1em;
         }
 
-        .overlay-content {
-            text-align: center;
-            width: 100%;
-            max-width: 480px;
-            padding: 20px;
+        .github-button:hover {
+            background-color: var(--link-hover-dark);
+            transform: translateY(-2px);
+            border-color: #666;
         }
 
-        .card {
-            background-color: var(--link-bg);
-            color: var(--text-color);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-            text-align: center;
-            border: 2px solid gray;
-        }
-
-        .card img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
-
-        .card-title {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
-
-        .card-progress {
-            font-size: 1em;
-            color: var(--text-color);
+        .github-button i {
+            font-size: 1.3em;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="profile">
-            <img src="https://github.com/Jennifer2005x.png" alt="Profile" class="profile-image">
-            <div class="profile-name">Jennifer</div>
-            <div class="profile-bio">La Vida De Una Chica Lunática 🙃</div>
+            <img src="test-image.jpg" alt="Profile" class="profile-image">
+            <div class="profile-name">Test</div>
+            <div class="profile-bio">Test Bio</div>
         </div>
 
         <div class="links" id="links">
@@ -218,9 +198,22 @@
     <div id="overlay-page" class="overlay hidden">
         <div class="overlay-content">
             <div class="profile">
-                <div class="profile-name">Más Información</div>
+                <div class="profile-name">Mis Listas</div>
             </div>
-            <!-- Aquí puedes agregar tu nuevo contenido en el futuro -->
+            <div class="github-lists">
+                <a href="#" class="github-button">
+                    <i class="fas fa-mobile-alt"></i>
+                    Apps
+                </a>
+                <a href="#" class="github-button">
+                    <i class="fas fa-terminal"></i>
+                    Root
+                </a>
+                <a href="#" class="github-button">
+                    <i class="fas fa-gamepad"></i>
+                    Emulación
+                </a>
+            </div>
         </div>
     </div>
 
@@ -234,56 +227,31 @@
 
     <script>
         const CONFIG = {
-            profileImage: 'https://github.com/Jennifer2005x.png',
-            name: 'Jennifer',
-            bio: 'La Vida De Una Chica Lunática 🙃',
+            profileImage: 'test-image.jpg',
+            name: 'Test',
+            bio: 'Test Bio',
             links: [
                 { 
-                    title: 'AniList', 
-                    url: 'https://anilist.co/user/7014868',
-                    icon: '📺'
+                    title: 'Link 1', 
+                    url: '#',
+                    icon: '📌'
                 },
                 { 
-                    title: 'Blog', 
-                    url: 'https://jennifer2005x.tkz.me/',
-                    icon: '📝'
-                },
-                {   
-                    title: 'Loops',
-                    url: 'https://loops.video/@Jennifer2005x',
-                    icon: '🎥'
-                },
-                {   
-                    title: 'Logros',
-                    url: 'https://retroachievements.org/user/KTJainer22',
-                    icon: '🏆'
-                },
-                {   
-                    title: 'Simkl',
-                    url: 'https://simkl.com/5732000/dashboard/',
-                    icon: '📊'
-                },
-                { 
-                    title: 'Mi Comunidad', 
-                    url: 'https://t.me/elsotano22',
-                    icon: '👥'
-                }            
+                    title: 'Link 2', 
+                    url: '#',
+                    icon: '🔗'
+                }
             ],
             socialLinks: [
                 { 
-                    platform: 'Mastodon', 
-                    url: 'https://tkz.one/@Jennifer2005x',
-                    icon: '🐘'
-                },
-                { 
-                    platform: 'Telegram', 
-                    url: 'https://t.me/Jennifer2005xx',
-                    icon: '📱'
-                },
-                { 
-                    platform: 'GitHub', 
-                    url: 'https://github.com/Jennifer2005x',
+                    platform: 'Social 1', 
+                    url: '#',
                     icon: '💻'
+                },
+                { 
+                    platform: 'Social 2', 
+                    url: '#',
+                    icon: '📱'
                 }
             ]
         };
@@ -389,4 +357,4 @@
         });
     </script>
 </body>
-                     </html>
+    </html>
