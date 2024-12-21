@@ -111,10 +111,61 @@
 
         .social-link:hover {
             opacity: 1;
+        .overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.3s ease;
+}
+
+.hidden {
+    display: none;
+}
+
+#overlay-button {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    padding: 10px 20px;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.overlay-content {
+    text-align: center;
+}
+
+.overlay-content button {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: #555;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;    
         }
     </style>
 </head>
 <body>
+    <div id="overlay-page" class="overlay hidden">
+    <div class="overlay-content">
+        <h1>Overlay Page</h1>
+        <p>¡Esta es la página superpuesta!</p>
+        <button onclick="closeOverlay()">Cerrar</button>
+    </div>
+</div>
+
+<button id="overlay-button" onclick="openOverlay()">Abrir página superpuesta</button>
     <div class="container">
         <div class="profile">
             <img src="https://github.com/Jennifer2005x.png" alt="Profile" class="profile-image">
@@ -229,6 +280,18 @@
                 socialEl.title = social.platform;
                 socialLinksContainer.appendChild(socialEl);
             });
+
+            function openOverlay() {
+    document.getElementById('overlay-page').classList.remove('hidden');
+}
+
+function closeOverlay() {
+    document.getElementById('overlay-page').classList.add('hidden');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    // existing loadPage code
+});
         }
 
         function applyTheme(theme) {
