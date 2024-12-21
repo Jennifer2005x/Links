@@ -156,23 +156,6 @@
             max-width: 480px;
             padding: 20px;
         }
-
-        .overlay-content button {
-            margin-top: 20px;
-            padding: 15px;
-            background-color: var(--bg-color);
-            color: var(--text-color);
-            border: 2px solid gray;
-            border-radius: 10px;
-            cursor: pointer;
-            font-family: 'Inter', sans-serif;
-            font-weight: 600;
-            transition: background-color 0.3s ease;
-        }
-
-        .overlay-content button:hover {
-            background-color: var(--link-hover);
-        }
     </style>
 </head>
 <body>
@@ -200,11 +183,10 @@
                 <a href="#" class="link">Ejemplo de enlace 1</a>
                 <a href="#" class="link">Ejemplo de enlace 2</a>
             </div>
-            <button onclick="closeOverlay()">Cerrar página</button>
         </div>
     </div>
 
-    <button id="overlay-button" onclick="openOverlay()">Nueva página</button>
+    <button id="overlay-button">Nueva página</button>
 
     <script>
     const CONFIG = {
@@ -262,12 +244,19 @@
         ]
     };
 
-    function openOverlay() {
-        document.getElementById('overlay-page').classList.remove('hidden');
-    }
+    const overlayButton = document.getElementById('overlay-button');
 
-    function closeOverlay() {
-        document.getElementById('overlay-page').classList.add('hidden');
+    function toggleOverlay() {
+        const overlay = document.getElementById('overlay-page');
+        const isHidden = overlay.classList.contains('hidden');
+        
+        if (isHidden) {
+            overlay.classList.remove('hidden');
+            overlayButton.textContent = 'Cerrar página';
+        } else {
+            overlay.classList.add('hidden');
+            overlayButton.textContent = 'Nueva página';
+        }
     }
 
     function loadPage() {
@@ -337,7 +326,10 @@
         applyTheme(e.matches ? 'dark' : 'light');
     });
 
-    document.addEventListener('DOMContentLoaded', loadPage);
+    document.addEventListener('DOMContentLoaded', () => {
+        loadPage();
+        overlayButton.addEventListener('click', toggleOverlay);
+    });
     </script>
 </body>
     </html>
