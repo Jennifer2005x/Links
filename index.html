@@ -198,6 +198,30 @@
             font-size: 1em;
             color: var(--text-color);
         }
+
+        /* New styles for buttons */
+        .overlay-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .overlay-button-small {
+            background-color: var(--link-bg);
+            color: var(--text-color);
+            border: none;
+            border-radius: 10px;
+            padding: 10px 15px;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            transition: background-color 0.3s ease;
+        }
+
+        .overlay-button-small:hover {
+            background-color: var(--link-hover);
+        }
     </style>
 </head>
 <body>
@@ -219,6 +243,13 @@
         <div class="overlay-content">
             <div class="profile">
                 <div class="profile-name">Más Información</div>
+            </div>
+            <!-- Añadido título "Mis Listas" y botones -->
+            <h2>Mis Listas</h2>
+            <div class="overlay-buttons">
+                <button class="overlay-button-small">Apps</button>
+                <button class="overlay-button-small">Root</button>
+                <button class="overlay-button-small">Emulation</button>
             </div>
             <!-- Aquí puedes agregar tu nuevo contenido en el futuro -->
         </div>
@@ -389,4 +420,4 @@
         });
     </script>
 </body>
-                     </html>
+    </html>
