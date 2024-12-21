@@ -123,8 +123,9 @@
             color: var(--text-color-dark);
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             transition: all 0.3s ease;
+            padding-top: 20px;
         }
 
         .hidden {
@@ -184,8 +185,7 @@
         }
 
         .card img {
-            max-width: 100%;
-            border-radius: 10px;
+            max-width: 50%;
             margin-bottom: 15px;
         }
 
@@ -218,10 +218,10 @@
     <div id="overlay-page" class="overlay hidden">
         <div class="overlay-content">
             <div class="profile">
+                <img id="anilist-cover" src="" alt="Cover Image" class="profile-image">
                 <div class="profile-name">Mi Actividad en AniList</div>
             </div>
             <div class="card" id="anilist-card">
-                <img id="anilist-cover" src="" alt="Cover Image">
                 <div class="card-title" id="anilist-title">Cargando...</div>
                 <div class="card-progress" id="anilist-progress"></div>
             </div>
@@ -516,4 +516,4 @@
         });
     </script>
 </body>
-    </html>
+                </html>
