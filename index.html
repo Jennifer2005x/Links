@@ -7,6 +7,8 @@
     <link rel="icon" type="image/png" href="https://i.postimg.cc/rpSfZQ8f/b3cb94e8275b13a4.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Añadimos Color Thief para extraer los colores -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/color-thief/2.3.0/color-thief.umd.js"></script>
 
     <!-- Open Graph -->
     <meta property="og:title" content="Mis Enlaces">
@@ -19,19 +21,17 @@
     
     <style>
         :root {
-            --bg-color-dark: #121212;
-            --text-color-dark: #ffffff;
-            --link-bg-dark: #2c2c2c;
-            --link-hover-dark: #3c3c3c;
-            --bg-color-light: #ffffff;
-            --text-color-light: #000000;
-            --link-bg-light: #f2f2f2;
-            --link-hover-light: #e0e0e0;
+            --bg-gradient: linear-gradient(135deg, #121212, #2c2c2c);
+            --text-color: #ffffff;
+            --link-bg: rgba(255, 255, 255, 0.1);
+            --link-hover: rgba(255, 255, 255, 0.2);
+            --profile-border: rgba(255, 255, 255, 0.3);
+            --transition-time: 0.5s;
         }
 
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-color);
+            background: var(--bg-gradient);
             color: var(--text-color);
             display: flex;
             flex-direction: column;
@@ -40,11 +40,13 @@
             margin: 0;
             padding: 20px;
             box-sizing: border-box;
+            transition: all var(--transition-time) ease;
         }
 
         .container {
             width: 100%;
             max-width: 480px;
+            transition: all var(--transition-time) ease;
         }
 
         .profile {
@@ -57,7 +59,8 @@
             height: 80px;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid #ffffff;
+            border: 3px solid var(--profile-border);
+            transition: border-color var(--transition-time) ease;
         }
 
         .profile-name {
@@ -67,7 +70,8 @@
         }
 
         .profile-bio {
-            color: #aaaaaa;
+            color: var(--text-color);
+            opacity: 0.7;
             margin-top: 10px;
         }
 
@@ -85,11 +89,13 @@
             border-radius: 10px;
             text-align: center;
             font-weight: 600;
-            transition: background-color 0.3s ease;
+            transition: all var(--transition-time) ease;
+            backdrop-filter: blur(5px);
         }
 
         .link:hover {
             background-color: var(--link-hover);
+            transform: translateY(-2px);
         }
 
         .social-links {
@@ -104,18 +110,19 @@
             text-decoration: none;
             font-size: 24px;
             opacity: 0.7;
-            transition: opacity 0.3s ease;
+            transition: all var(--transition-time) ease;
         }
 
         .social-link:hover {
             opacity: 1;
+            transform: scale(1.1);
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="profile">
-            <img src="https://github.com/Jennifer2005x.png" alt="Profile" class="profile-image">
+            <img src="https://github.com/Jennifer2005x.png" alt="Profile" class="profile-image" crossorigin="anonymous">
             <div class="profile-name">Jennifer</div>
             <div class="profile-bio">La Vida De Una Chica Lunática 🤪</div>
         </div>
@@ -183,74 +190,101 @@
         ]
     };
 
-        function loadPage() {
-            document.querySelector('.profile-image').src = CONFIG.profileImage;
-            document.querySelector('.profile-name').textContent = CONFIG.name;
-            document.querySelector('.profile-bio').textContent = CONFIG.bio;
+    function extractColorsFromProfile() {
+        const colorThief = new ColorThief();
+        const profileImage = document.querySelector('.profile-image');
 
-            const linksContainer = document.getElementById('links');
-            CONFIG.links.forEach(link => {
-                const linkEl = document.createElement('a');
-                linkEl.href = link.url;
-                linkEl.className = 'link';
-                linkEl.target = '_blank';
-                
-                const contentContainer = document.createElement('div');
-                contentContainer.style.display = 'flex';
-                contentContainer.style.alignItems = 'center';
-                contentContainer.style.justifyContent = 'center';
-                contentContainer.style.gap = '10px'; 
-
-                if (link.icon) {
-                    const iconContainer = document.createElement('span');
-                    iconContainer.innerHTML = link.icon;
-                    iconContainer.style.display = 'flex';
-                    iconContainer.style.alignItems = 'center';
-                    contentContainer.appendChild(iconContainer);
-                }
-
-                const textSpan = document.createElement('span');
-                textSpan.textContent = link.title;
-                contentContainer.appendChild(textSpan);
-
-                linkEl.appendChild(contentContainer);
-                linksContainer.appendChild(linkEl);
-            });
-
-            const socialLinksContainer = document.getElementById('social-links');
-            CONFIG.socialLinks.forEach(social => {
-                const socialEl = document.createElement('a');
-                socialEl.href = social.url;
-                socialEl.className = 'social-link';
-                socialEl.target = '_blank';
-                socialEl.innerHTML = social.icon;
-                socialEl.title = social.platform;
-                socialLinksContainer.appendChild(socialEl);
-            });
+        function applyColors(colors) {
+            // Convertir colores RGB a strings CSS
+            const colorStrings = colors.map(color => `rgb(${color[0]}, ${color[1]}, ${color[2]})`);
+            
+            // Crear gradiente con opacidad
+            const gradient = `linear-gradient(135deg, 
+                ${colorStrings[0]} 0%, 
+                ${colorStrings[1]} 50%, 
+                ${colorStrings[2]} 100%)`;
+            
+            // Calcular brillo del color principal para el contraste del texto
+            const brightness = (colors[0][0] * 299 + colors[0][1] * 587 + colors[0][2] * 114) / 1000;
+            const textColor = brightness > 128 ? '#000000' : '#ffffff';
+            
+            // Aplicar los nuevos colores con transiciones suaves
+            document.documentElement.style.setProperty('--bg-gradient', gradient);
+            document.documentElement.style.setProperty('--text-color', textColor);
+            document.documentElement.style.setProperty('--link-bg', `${brightness > 128 ? 'rgba(0,0,0,0.1)' : 'rgba(255,255,255,0.1)'}`);
+            document.documentElement.style.setProperty('--link-hover', `${brightness > 128 ? 'rgba(0,0,0,0.2)' : 'rgba(255,255,255,0.2)'}`);
+            document.documentElement.style.setProperty('--profile-border', `${brightness > 128 ? 'rgba(0,0,0,0.3)' : 'rgba(255,255,255,0.3)'}`);
         }
 
-        function applyTheme(theme) {
-            const root = document.documentElement;
-            if (theme === 'dark') {
-                root.style.setProperty('--bg-color', 'var(--bg-color-dark)');
-                root.style.setProperty('--text-color', 'var(--text-color-dark)');
-                root.style.setProperty('--link-bg', 'var(--link-bg-dark)');
-                root.style.setProperty('--link-hover', 'var(--link-hover-dark)');
-            } else {
-                root.style.setProperty('--bg-color', 'var(--bg-color-light)');
-                root.style.setProperty('--text-color', 'var(--text-color-light)');
-                root.style.setProperty('--link-bg', 'var(--link-bg-light)');
-                root.style.setProperty('--link-hover', 'var(--link-hover-light)');
+        if (profileImage.complete) {
+            try {
+                const palette = colorThief.getPalette(profileImage, 3);
+                applyColors(palette);
+            } catch (error) {
+                console.error('Error al extraer colores:', error);
             }
+        } else {
+            profileImage.addEventListener('load', function() {
+                try {
+                    const palette = colorThief.getPalette(profileImage, 3);
+                    applyColors(palette);
+                } catch (error) {
+                    console.error('Error al extraer colores:', error);
+                }
+            });
         }
+    }
 
-        const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-        applyTheme(darkModeMediaQuery.matches ? 'dark' : 'light');
-        darkModeMediaQuery.addEventListener('change', (e) => {
-            applyTheme(e.matches ? 'dark' : 'light');
+    function loadPage() {
+        document.querySelector('.profile-image').src = CONFIG.profileImage;
+        document.querySelector('.profile-name').textContent = CONFIG.name;
+        document.querySelector('.profile-bio').textContent = CONFIG.bio;
+
+        const linksContainer = document.getElementById('links');
+        CONFIG.links.forEach(link => {
+            const linkEl = document.createElement('a');
+            linkEl.href = link.url;
+            linkEl.className = 'link';
+            linkEl.target = '_blank';
+            
+            const contentContainer = document.createElement('div');
+            contentContainer.style.display = 'flex';
+            contentContainer.style.alignItems = 'center';
+            contentContainer.style.justifyContent = 'center';
+            contentContainer.style.gap = '10px'; 
+
+            if (link.icon) {
+                const iconContainer = document.createElement('span');
+                iconContainer.innerHTML = link.icon;
+                iconContainer.style.display = 'flex';
+                iconContainer.style.alignItems = 'center';
+                contentContainer.appendChild(iconContainer);
+            }
+
+            const textSpan = document.createElement('span');
+            textSpan.textContent = link.title;
+            contentContainer.appendChild(textSpan);
+
+            linkEl.appendChild(contentContainer);
+            linksContainer.appendChild(linkEl);
         });
 
-        document.addEventListener('DOMContentLoaded', loadPage);
+        const socialLinksContainer = document.getElementById('social-links');
+        CONFIG.socialLinks.forEach(social => {
+            const socialEl = document.createElement('a');
+            socialEl.href = social.url;
+            socialEl.className = 'social-link';
+            socialEl.target = '_blank';
+            socialEl.innerHTML = social.icon;
+            socialEl.title = social.platform;
+            socialLinksContainer.appendChild(socialEl);
+        });
+
+        // Extraer y aplicar colores después de cargar la página
+        extractColorsFromProfile();
+    }
+
+    document.addEventListener('DOMContentLoaded', loadPage);
     </script>
 </body>
-</html>
+    </html>
