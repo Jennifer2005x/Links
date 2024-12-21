@@ -174,30 +174,37 @@
         }
 
         .card {
-            background-color: var(--link-bg);
-            color: var(--text-color);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-            text-align: center;
-            border: 2px solid gray;
-        }
+    background-color: var(--link-bg);
+    color: var(--text-color);
+    padding: 20px;
+    border-radius: 10px;
+    margin-top: 30px;
+    text-align: left;
+    border: 2px solid gray;
+    display: flex;
+    gap: 20px;
+    align-items: start;
+}
 
-        .card img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
+.card img {
+    max-width: 150px;
+    border-radius: 10px;
+    flex-shrink: 0;
+}
 
-        .card-title {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
+.card-content {
+    flex: 1;
+}
 
-        .card-progress {
-            font-size: 1em;
-            color: var(--text-color);
-        }
+.card-title {
+    font-size: 1.2em;
+    margin-bottom: 10px;
+}
+
+.card-progress {
+    font-size: 1em;
+    color: var(--text-color);
+}
     </style>
 </head>
 <body>
@@ -221,11 +228,12 @@
                 <div class="profile-name">Mi Actividad en AniList</div>
             </div>
             <div class="card" id="anilist-card">
-                <img id="anilist-cover" src="" alt="Cover Image">
-                <div class="card-title" id="anilist-title">Cargando...</div>
-                <div class="card-progress" id="anilist-progress"></div>
+    <img id="anilist-cover" src="" alt="Cover Image">
+    <div class="card-content">
+        <div class="card-title" id="anilist-title">Cargando...</div>
+        <div class="card-progress" id="anilist-progress"></div>
+    </div>
             </div>
-        </div>
     </div>
 
     <button id="overlay-button">
