@@ -208,7 +208,7 @@
 
         .overlay-button-small {
             background-color: var(--link-bg);
-            color: var(--text-color);
+            color: var (--text-color);
             border: none;
             border-radius: 10px;
             padding: 10px 15px;
@@ -222,10 +222,6 @@
             background-color: var (--link-hover);
         }
 
-        .visits {
-            margin-top: 20px;
-            font-weight: 600;
-        }
     </style>
 </head>
 <body>
@@ -241,10 +237,6 @@
 
         <div class="social-links" id="social-links">
         </div>
-
-        <div class="visits">
-            <p>Visitas: <span id="visitCount">0</span></p>
-        </div>
     </div>
 
     <div id="overlay-page" class="overlay hidden">
@@ -255,6 +247,8 @@
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/termux" target="_blank">Termux</a>
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/emulation" target="_blank">Emulation</a>
             </div>
+            <!-- Botón adicional en el overlay -->
+            <button id="overlay-extra-button" class="overlay-button-small">Extra</button>
         </div>
     </div>
 
@@ -394,8 +388,6 @@
                 socialEl.title = social.platform;
                 socialLinksContainer.appendChild(socialEl);
             });
-
-            updateVisitCount();
         }
 
         function applyTheme(theme) {
@@ -413,13 +405,6 @@
             }
         }
 
-        function updateVisitCount() {
-            let visitCount = localStorage.getItem('visitCount') || 0;
-            visitCount = parseInt(visitCount) + 1;
-            localStorage.setItem('visitCount', visitCount);
-            document.getElementById('visitCount').textContent = visitCount;
-        }
-
         const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         applyTheme(darkModeMediaQuery.matches ? 'dark' : 'light');
         darkModeMediaQuery.addEventListener('change', (e) => {
@@ -432,4 +417,4 @@
         });
     </script>
 </body>
-                </html>
+    </html>
