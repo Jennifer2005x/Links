@@ -17,6 +17,9 @@
     <!-- Verificación de Mastodon -->
     <link rel="me" href="https://tkz.one/@Jennifer2005x">
 
+    <!-- CountAPI Script -->
+    <script src="https://cdn.jsdelivr.net/npm/countapi-js@1.0.3/dist/countapi.min.js"></script>
+
     <style>
         :root {
             --bg-color-dark: #121212;
@@ -220,7 +223,7 @@
         }
 
         .overlay-button-small:hover {
-            background-color: var(--link-hover);
+            background-color: var (--link-hover);
         }
     </style>
 </head>
@@ -248,7 +251,11 @@
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/termux" target="_blank">Termux</a>
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/emulation" target="_blank">Emulation</a>
             </div>
-            <!-- Aquí puedes agregar tu nuevo contenido en el futuro -->
+            <!-- Nueva sección para estadísticas de visitas -->
+            <div id="visit-stats" class="card">
+                <h3 class="card-title">Visitas a la página</h3>
+                <p class="card-progress">Total de visitas: <span id="visit-count">0</span></p>
+            </div>
         </div>
     </div>
 
@@ -414,7 +421,17 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadPage();
             overlayButton.addEventListener('click', toggleOverlay);
+
+            // Inicializar CountAPI
+            const namespace = 'jennifer2005x_links';
+            const key = 'page_visits';
+
+            countapi.set(namespace, key).then((result) => {
+                countapi.hit(namespace, key).then((result) => {
+                    document.getElementById('visit-count').textContent = result.value;
+                });
+            });
         });
     </script>
 </body>
-            </html>
+    </html>
