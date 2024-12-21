@@ -135,19 +135,28 @@
             position: fixed;
             bottom: 20px;
             left: 20px;
-            padding: 15px;
+            padding: 10px 15px;
             background-color: var(--bg-color);
             color: var(--text-color);
-            border: 2px solid gray;
+            border: none;
             border-radius: 10px;
             cursor: pointer;
             font-family: 'Inter', sans-serif;
             font-weight: 600;
-            transition: background-color 0.3s ease;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
         }
 
         #overlay-button:hover {
             background-color: var(--link-hover);
+        }
+
+        #overlay-button svg {
+            width: 16px;
+            height: 16px;
         }
 
         .overlay-content {
@@ -186,7 +195,10 @@
         </div>
     </div>
 
-    <button id="overlay-button">Nueva página</button>
+    <button id="overlay-button">
+        <!-- SVG AQUÍ (el de más) -->
+        <span>Más</span>
+    </button>
 
     <script>
     const CONFIG = {
@@ -244,18 +256,23 @@
         ]
     };
 
-    const overlayButton = document.getElementById('overlay-button');
-
     function toggleOverlay() {
         const overlay = document.getElementById('overlay-page');
+        const button = document.getElementById('overlay-button');
         const isHidden = overlay.classList.contains('hidden');
         
         if (isHidden) {
             overlay.classList.remove('hidden');
-            overlayButton.textContent = 'Cerrar página';
+            button.innerHTML = `
+                <!-- SVG AQUÍ (el de cerrar) -->
+                <span>Cerrar</span>
+            `;
         } else {
             overlay.classList.add('hidden');
-            overlayButton.textContent = 'Nueva página';
+            button.innerHTML = `
+                <!-- SVG AQUÍ (el de más) -->
+                <span>Más</span>
+            `;
         }
     }
 
