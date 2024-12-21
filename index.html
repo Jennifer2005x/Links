@@ -172,6 +172,32 @@
             max-width: 480px;
             padding: 20px;
         }
+
+        .card {
+            background-color: var(--link-bg);
+            color: var(--text-color);
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+            text-align: center;
+            border: 2px solid gray;
+        }
+
+        .card img {
+            max-width: 100%;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
+
+        .card-title {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .card-progress {
+            font-size: 1em;
+            color: var(--text-color);
+        }
     </style>
 </head>
 <body>
@@ -192,12 +218,12 @@
     <div id="overlay-page" class="overlay hidden">
         <div class="overlay-content">
             <div class="profile">
-                <div class="profile-name">Nueva Página</div>
-                <div class="profile-bio">Esta es una página superpuesta</div>
+                <div class="profile-name">Mi Actividad en AniList</div>
             </div>
-            <div class="links">
-                <a href="#" class="link">Ejemplo de enlace 1</a>
-                <a href="#" class="link">Ejemplo de enlace 2</a>
+            <div class="card" id="anilist-card">
+                <img id="anilist-cover" src="" alt="Cover Image">
+                <div class="card-title" id="anilist-title">Cargando...</div>
+                <div class="card-progress" id="anilist-progress"></div>
             </div>
         </div>
     </div>
@@ -275,6 +301,7 @@
             
             if (isHidden) {
                 overlay.classList.remove('hidden');
+                fetchAniListData(); // Agregamos esta línea para actualizar los datos
                 button.innerHTML = `
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
@@ -352,6 +379,128 @@
                 root.style.setProperty('--text-color', 'var(--text-color-light)');
                 root.style.setProperty('--link-bg', 'var(--link-bg-light)');
                 root.style.setProperty('--link-hover', 'var(--link-hover-light)');
+            }
+        }
+
+        async function getUserId(username) {
+            const query = `
+                query ($username: String) {
+                    User(name: $username) {
+                        id
+                    }
+                }
+            `;
+
+            const variables = {
+                username: username
+            };
+
+            const url = "https://graphql.anilist.co";
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    query: query,
+                    variables: variables
+                })
+            };
+
+            const response = await fetch(url, options);
+            const data = await response.json();
+
+            if (data && data.data && data.data.User) {
+                return data.data.User.id;
+            } else {
+                throw new Error('AniList user not found');
+            }
+        }
+
+        async function getLatestActivity(userId) {
+            const query = `
+                query ($user_id: Int) {
+                    Page(perPage: 1) {
+                        activities(userId: $user_id, sort: ID_DESC) {
+                            ... on ListActivity {
+                                type
+                                createdAt
+                                status
+                                progress
+                                media {
+                                    title {
+                                        romaji
+                                    }
+                                    coverImage {
+                                        large
+                                    }
+                                }
+                            }
+                            ... on TextActivity {
+                                type
+                                createdAt
+                                text
+                            }
+                        }
+                    }
+                }
+            `;
+
+            const variables = {
+                user_id: userId
+            };
+
+            const url = "https://graphql.anilist.co";
+
+            const options = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({
+                    query: query,
+                    variables: variables
+                })
+            };
+
+            const response = await fetch(url, options);
+            const data = await response.json();
+
+            if (data && data.data && data.data.Page.activities.length > 0) {
+                return data.data.Page.activities[0];
+            } else {
+                throw new Error('No activities found');
+            }
+        }
+
+        async function fetchAniListData() {
+            try {
+                const userId = await getUserId("Jennifer2005x");
+                const activity = await getLatestActivity(userId);
+
+                const statusMap = {
+                    'completed': 'ha completado',
+                    'watching': 'está viendo',
+                    'reading': 'está leyendo',
+                    'paused': 'ha pausado',
+                    'dropped': 'ha abandonado'
+                };
+
+                if (activity.type === "ANIME_LIST" || activity.type === "MANGA_LIST") {
+                    const status = statusMap[activity.status] || 'ha actualizado su actividad en';
+                    document.getElementById('anilist-cover').src = activity.media.coverImage.large;
+                    document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
+                    document.getElementById('anilist-progress').textContent = `Progreso: ${activity.progress}`;
+                } else if (activity.type === "TEXT") {
+                    document.getElementById('anilist-title').textContent = activity.text;
+                    document.getElementById('anilist-progress').textContent = '';
+                }
+            } catch (error) {
+                console.error('Error fetching AniList data:', error);
+                document.getElementById('anilist-title').textContent = "Error al cargar datos";
             }
         }
 
