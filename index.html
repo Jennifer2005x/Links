@@ -7,6 +7,7 @@
     <link rel="icon" type="image/png" href="https://i.postimg.cc/rpSfZQ8f/b3cb94e8275b13a4.png">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/node-vibrant@3/lib/bundle.js"></script>
 
     <!-- Open Graph -->
     <meta property="og:title" content="Mis Enlaces">
@@ -244,13 +245,47 @@
             }
         }
 
+        function extractColors() {
+            const img = new Image();
+            img.crossOrigin = "Anonymous";
+            img.src = CONFIG.profileImage;
+            img.onload = () => {
+                const vibrant = new Vibrant(img);
+                const swatches = vibrant.swatches();
+                const root = document.documentElement;
+
+                if (swatches.Vibrant) {
+                    const vibrantColor = swatches.Vibrant.getHex();
+                    root.style.setProperty('--bg-color-dark', vibrantColor);
+                    root.style.setProperty('--text-color-dark', getContrastYIQ(vibrantColor));
+                }
+                if (swatches.LightVibrant) {
+                    const lightVibrantColor = swatches.LightVibrant.getHex();
+                    root.style.setProperty('--bg-color-light', lightVibrantColor);
+                    root.style.setProperty('--text-color-light', getContrastYIQ(lightVibrantColor));
+                }
+            }
+        }
+
+        function getContrastYIQ(hexcolor) {
+            hexcolor = hexcolor.replace("#", "");
+            const r = parseInt(hexcolor.substr(0,2),16);
+            const g = parseInt(hexcolor.substr(2,2),16);
+            const b = parseInt(hexcolor.substr(4,2),16);
+            const yiq = ((r*299)+(g*587)+(b*114))/1000;
+            return (yiq >= 128) ? 'black' : 'white';
+        }
+
         const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         applyTheme(darkModeMediaQuery.matches ? 'dark' : 'light');
         darkModeMediaQuery.addEventListener('change', (e) => {
             applyTheme(e.matches ? 'dark' : 'light');
         });
 
-        document.addEventListener('DOMContentLoaded', loadPage);
+        document.addEventListener('DOMContentLoaded', () => {
+            loadPage();
+            extractColors();
+        });
     </script>
 </body>
-</html>
+    </html>
