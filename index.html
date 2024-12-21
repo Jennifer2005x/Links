@@ -133,9 +133,9 @@
 
         #overlay-button {
             position: fixed;
-            bottom: 20px;
-            left: 20px;
-            padding: 10px 15px;
+            top: 20px;          /* Cambiado de bottom a top */
+            right: 20px;        /* Cambiado de left a right */
+            padding: 8px 12px;  /* Reducido el padding para hacerlo más compacto */
             background-color: var(--bg-color);
             color: var(--text-color);
             border: none;
@@ -147,16 +147,12 @@
             display: flex;
             align-items: center;
             gap: 4px;
-            font-size: 14px;
-        }
-
-        #overlay-button:hover {
-            background-color: var(--link-hover);
+            font-size: 12px;    /* Reducido el tamaño de la fuente */
         }
 
         #overlay-button svg {
-            width: 16px;
-            height: 16px;
+            width: 14px;        /* Reducido el tamaño del icono */
+            height: 14px;       /* Reducido el tamaño del icono */
             display: inline-flex;
             vertical-align: middle;
         }
@@ -233,7 +229,7 @@
             <line x1="12" y1="5" x2="12" y2="19"></line>
             <line x1="5" y1="12" x2="19" y2="12"></line>
         </svg>
-        <span>Más</span>
+        <span>AniList</span>
     </button>
 
     <script>
@@ -316,7 +312,7 @@
                         <line x1="12" y1="5" x2="12" y2="19"></line>
                         <line x1="5" y1="12" x2="19" y2="12"></line>
                     </svg>
-                    <span>Más</span>
+                    <span>AniList</span>
                 `;
             }
         }
