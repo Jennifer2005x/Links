@@ -151,7 +151,7 @@
         }
 
         #overlay-button:hover {
-            background-color: var(--link-hover);
+            background-color: var (--link-hover);
         }
 
         #overlay-button svg {
@@ -174,8 +174,8 @@
         }
 
         .card {
-            background-color: var(--link-bg);
-            color: var(--text-color);
+            background-color: var (--link-bg);
+            color: var (--text-color);
             padding: 20px;
             border-radius: 10px;
             margin-top: 30px;
@@ -196,10 +196,9 @@
 
         .card-progress {
             font-size: 1em;
-            color: var(--text-color);
+            color: var (--text-color);
         }
 
-        /* New styles for buttons */
         .overlay-buttons {
             display: flex;
             justify-content: center;
@@ -208,8 +207,8 @@
         }
 
         .overlay-button-small {
-            background-color: var(--link-bg);
-            color: var(--text-color);
+            background-color: var (--link-bg);
+            color: var (--text-color);
             border: none;
             border-radius: 10px;
             padding: 10px 15px;
@@ -220,7 +219,7 @@
         }
 
         .overlay-button-small:hover {
-            background-color: var(--link-hover);
+            background-color: var (--link-hover);
         }
     </style>
 </head>
@@ -232,23 +231,18 @@
             <div class="profile-bio">La Vida De Una Chica Lunática 🙃</div>
         </div>
 
-        <div class="links" id="links">
-        </div>
-
-        <div class="social-links" id="social-links">
-        </div>
+        <div class="links" id="links"></div>
+        <div class="social-links" id="social-links"></div>
     </div>
 
     <div id="overlay-page" class="overlay hidden">
         <div class="overlay-content">
-            <!-- Añadido título "Mis Listas" y botones al principio -->
             <h2>Mis Listas</h2>
             <div class="overlay-buttons">
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/my-apps" target="_blank">Apps</a>
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/termux" target="_blank">Termux</a>
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/emulation" target="_blank">Emulation</a>
             </div>
-            <!-- Aquí puedes agregar tu nuevo contenido en el futuro -->
         </div>
     </div>
 
@@ -266,53 +260,17 @@
             name: 'Jennifer',
             bio: 'La Vida De Una Chica Lunática 🙃',
             links: [
-                { 
-                    title: 'AniList', 
-                    url: 'https://anilist.co/user/7014868',
-                    icon: '📺'
-                },
-                { 
-                    title: 'Blog', 
-                    url: 'https://jennifer2005x.tkz.me/',
-                    icon: '📝'
-                },
-                {   
-                    title: 'Loops',
-                    url: 'https://loops.video/@Jennifer2005x',
-                    icon: '🎥'
-                },
-                {   
-                    title: 'Logros',
-                    url: 'https://retroachievements.org/user/KTJainer22',
-                    icon: '🏆'
-                },
-                {   
-                    title: 'Simkl',
-                    url: 'https://simkl.com/5732000/dashboard/',
-                    icon: '📊'
-                },
-                { 
-                    title: 'Mi Comunidad', 
-                    url: 'https://t.me/elsotano22',
-                    icon: '👥'
-                }            
+                { title: 'AniList', url: 'https://anilist.co/user/7014868', icon: '📺' },
+                { title: 'Blog', url: 'https://jennifer2005x.tkz.me/', icon: '📝' },
+                { title: 'Loops', url: 'https://loops.video/@Jennifer2005x', icon: '🎥' },
+                { title: 'Logros', url: 'https://retroachievements.org/user/KTJainer22', icon: '🏆' },
+                { title: 'Simkl', url: 'https://simkl.com/5732000/dashboard/', icon: '📊' },
+                { title: 'Mi Comunidad', url: 'https://t.me/elsotano22', icon: '👥' }
             ],
             socialLinks: [
-                { 
-                    platform: 'Mastodon', 
-                    url: 'https://tkz.one/@Jennifer2005x',
-                    icon: ''
-                },
-                { 
-                    platform: 'Telegram', 
-                    url: 'https://t.me/Jennifer2005xx',
-                    icon: '📱'
-                },
-                { 
-                    platform: 'GitHub', 
-                    url: 'https://github.com/Jennifer2005x',
-                    icon: '💻'
-                }
+                { platform: 'Mastodon', url: 'https://tkz.one/@Jennifer2005x', icon: '' },
+                { platform: 'Telegram', url: 'https://t.me/Jennifer2005xx', icon: '📱' },
+                { platform: 'GitHub', url: 'https://github.com/Jennifer2005x', icon: '💻' }
             ]
         };
 
@@ -417,4 +375,4 @@
         });
     </script>
 </body>
-            </html>
+    </html>
