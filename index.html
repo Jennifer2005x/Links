@@ -17,9 +17,6 @@
     <!-- Verificación de Mastodon -->
     <link rel="me" href="https://tkz.one/@Jennifer2005x">
 
-    <!-- CountAPI Script -->
-    <script src="https://cdn.jsdelivr.net/npm/countapi-js@1.0.3/dist/countapi.min.js"></script>
-
     <style>
         :root {
             --bg-color-dark: #121212;
@@ -202,7 +199,6 @@
             color: var(--text-color);
         }
 
-        /* New styles for buttons */
         .overlay-buttons {
             display: flex;
             justify-content: center;
@@ -225,6 +221,11 @@
         .overlay-button-small:hover {
             background-color: var (--link-hover);
         }
+
+        .visits {
+            margin-top: 20px;
+            font-weight: 600;
+        }
     </style>
 </head>
 <body>
@@ -240,21 +241,19 @@
 
         <div class="social-links" id="social-links">
         </div>
+
+        <div class="visits">
+            <p>Visitas: <span id="visitCount">0</span></p>
+        </div>
     </div>
 
     <div id="overlay-page" class="overlay hidden">
         <div class="overlay-content">
-            <!-- Añadido título "Mis Listas" y botones al principio -->
             <h2>Mis Listas</h2>
             <div class="overlay-buttons">
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/my-apps" target="_blank">Apps</a>
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/termux" target="_blank">Termux</a>
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/emulation" target="_blank">Emulation</a>
-            </div>
-            <!-- Nueva sección para estadísticas de visitas -->
-            <div id="visit-stats" class="card">
-                <h3 class="card-title">Visitas a la página</h3>
-                <p class="card-progress">Total de visitas: <span id="visit-count">0</span></p>
             </div>
         </div>
     </div>
@@ -395,6 +394,8 @@
                 socialEl.title = social.platform;
                 socialLinksContainer.appendChild(socialEl);
             });
+
+            updateVisitCount();
         }
 
         function applyTheme(theme) {
@@ -412,6 +413,13 @@
             }
         }
 
+        function updateVisitCount() {
+            let visitCount = localStorage.getItem('visitCount') || 0;
+            visitCount = parseInt(visitCount) + 1;
+            localStorage.setItem('visitCount', visitCount);
+            document.getElementById('visitCount').textContent = visitCount;
+        }
+
         const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         applyTheme(darkModeMediaQuery.matches ? 'dark' : 'light');
         darkModeMediaQuery.addEventListener('change', (e) => {
@@ -421,16 +429,6 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadPage();
             overlayButton.addEventListener('click', toggleOverlay);
-
-            // Inicializar CountAPI
-            const namespace = 'jennifer2005x_links';
-            const key = 'page_visits';
-
-            countapi.set(namespace, key).then((result) => {
-                countapi.hit(namespace, key).then((result) => {
-                    document.getElementById('visit-count').textContent = result.value;
-                });
-            });
         });
     </script>
 </body>
