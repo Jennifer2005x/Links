@@ -174,29 +174,37 @@
         }
 
         .card {
-            background-color: var(--link-bg);
-            color: var(--text-color);
-            padding: 20px;
-            border-radius: 10px;
-            margin-top: 30px;
-            text-align: center;
-            border: 2px solid gray;
-        }
+    background-color: var(--link-bg);
+    color: var(--text-color);
+    padding: 15px;  /* Reducido de 20px a 15px */
+    border-radius: 8px;  /* Reducido de 10px a 8px */
+    margin-top: 15px;  /* Reducido de 30px a 15px */
+    text-align: center;
+    border: 2px solid gray;
+    max-width: 300px;  /* Añadido para hacer la tarjeta más compacta */
+    margin-left: auto;  /* Centrar la tarjeta */
+    margin-right: auto; /* Centrar la tarjeta */
+}
 
-        .card img {
-            max-width: 100%;
-            border-radius: 10px;
-            margin-bottom: 15px;
-        }
+.card img {
+    max-width: 150px;  /* Reducir el tamaño máximo de la imagen */
+    height: auto;      /* Mantener la proporción */
+    border-radius: 8px;
+    margin-bottom: 10px; /* Reducido de 15px a 10px */
+}
 
-        .card-title {
-            font-size: 1.2em;
-            margin-bottom: 10px;
-        }
+.card-title {
+    font-size: 1em;    /* Reducido de 1.2em a 1em */
+    margin-bottom: 8px; /* Reducido de 10px a 8px */
+}
 
-        .card-progress {
-            font-size: 1em;
-            color: var(--text-color);
+.card-progress {
+    font-size: 0.9em;  /* Reducido de 1em a 0.9em */
+    color: var(--text-color);
+}
+        .overlay-content .profile {
+    margin-bottom: 15px;   /* Esto reduce el espacio entre el título y la tarjeta */
+    padding-top: 15px;     /* Esto añade un pequeño espacio en la parte superior */
         }
     </style>
 </head>
