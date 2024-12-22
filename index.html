@@ -199,6 +199,17 @@
             color: var(--text-color);
         }
 
+        /* Estilos adicionales para estadísticas */
+        #statistics {
+            margin-top: 20px;
+            padding: 20px;
+            background-color: var(--link-bg);
+            color: var(--text-color);
+            border-radius: 10px;
+            text-align: center;
+            border: 2px solid gray;
+        }
+
         /* New styles for buttons */
         .overlay-buttons {
             display: flex;
@@ -249,6 +260,11 @@
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/emulation" target="_blank">Emulation</a>
             </div>
             <!-- Aquí puedes agregar tu nuevo contenido en el futuro -->
+            <!-- Sección de estadísticas -->
+            <div id="statistics" class="card">
+                <h2>Estadísticas de Visitas</h2>
+                <div id="visit-count">Cargando...</div>
+            </div>
         </div>
     </div>
 
@@ -328,7 +344,7 @@
                 button.innerHTML = `
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="18" y1="6" x2="6" y2="18"></line>
-                        <line x1="6" y1="6" x2="18" y2="18"></line>
+                        <line x1="6" y1="6" x2="18"></line>
                     </svg>
                     <span>Cerrar</span>
                 `;
@@ -337,7 +353,7 @@
                 button.innerHTML = `
                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <line x1="12" y1="5" x2="12" y2="19"></line>
-                        <line x1="5" y1="12" x2="19" y2="12"></line>
+                        <line x1="5" y1="12" x2="19"></line>
                     </svg>
                     <span>Más</span>
                 `;
@@ -405,6 +421,19 @@
             }
         }
 
+        function loadVisitStatistics() {
+            // Replace with actual API call to get visit statistics
+            fetch('https://api.example.com/visit-stats')
+                .then(response => response.json())
+                .then(data => {
+                    document.getElementById('visit-count').textContent = `Visitas: ${data.visits}`;
+                })
+                .catch(error => {
+                    console.error('Error fetching visit statistics:', error);
+                    document.getElementById('visit-count').textContent = 'Error cargando estadísticas';
+                });
+        }
+
         const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         applyTheme(darkModeMediaQuery.matches ? 'dark' : 'light');
         darkModeMediaQuery.addEventListener('change', (e) => {
@@ -414,7 +443,8 @@
         document.addEventListener('DOMContentLoaded', () => {
             loadPage();
             overlayButton.addEventListener('click', toggleOverlay);
+            loadVisitStatistics();
         });
     </script>
 </body>
-            </html>
+    </html>
