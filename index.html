@@ -249,6 +249,13 @@
                 <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/emulation" target="_blank">Emulation</a>
             </div>
             <!-- Aquí puedes agregar tu nuevo contenido en el futuro -->
+
+            <!-- Añadido título "Canal de Telegram" y botones -->
+            <h2>Canal de Telegram</h2>
+            <div class="overlay-buttons">
+                <a class="overlay-button-small" href="https://t.me/elsotano22" target="_blank">Ir al Canal</a>
+                <button class="overlay-button-small" onclick="copyToClipboard('https://rsshub.app/telegram/channel/@elsotano22')">Copiar Link RSS</button>
+            </div>
         </div>
     </div>
 
@@ -405,6 +412,16 @@
             }
         }
 
+        function copyToClipboard(text) {
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+            alert('Link RSS copiado al portapapeles');
+        }
+
         const darkModeMediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
         applyTheme(darkModeMediaQuery.matches ? 'dark' : 'light');
         darkModeMediaQuery.addEventListener('change', (e) => {
@@ -417,4 +434,4 @@
         });
     </script>
 </body>
-            </html>
+                    </html>
