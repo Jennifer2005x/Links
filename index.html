@@ -199,7 +199,6 @@
             color: var(--text-color);
         }
 
-        /* New styles for buttons */
         .overlay-buttons {
             display: flex;
             justify-content: center;
@@ -222,6 +221,9 @@
         .overlay-button-small:hover {
             background-color: var(--link-hover);
         }
+        .small-title {
+        font-size: 1em;
+        }
     </style>
 </head>
 <body>
@@ -241,21 +243,21 @@
 
     <div id="overlay-page" class="overlay hidden">
         <div class="overlay-content">
-            
-            <h2>Listas De Github</h2>
-            <div class="overlay-buttons">
-                <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/my-apps" target="_blank">Apps</a>
-                <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/termux" target="_blank">Termux</a>
-                <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/emulation" target="_blank">Emulation</a>
-            </div>
-            
-            <hr style="margin: 20px 0;">
-            
-            <h2>Canal de Telegram</h2>
-            <div class="overlay-buttons">
-                <a class="overlay-button-small" href="https://t.me/unsotano22" target="_blank">Ir al Canal</a>
-                <button class="overlay-button-small" onclick="copyToClipboard('rsshub.app/telegram/channel/@unsotano22')">Copiar RSS</button>
-            </div>
+    <h2 class="small-title">Listas De Github</h2>
+    <div class="overlay-buttons">
+        <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/my-apps" target="_blank">Apps</a>
+        <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/termux" target="_blank">Termux</a>
+        <a class="overlay-button-small" href="https://github.com/stars/Jennifer2005x/lists/emulation" target="_blank">Emulation</a>
+    </div>
+    
+    <hr style="margin: 20px 0;">
+    
+    <h2 class="small-title">Canal de Telegram</h2>
+    <div class="overlay-buttons">
+        <a class="overlay-button-small" href="https://t.me/unsotano22" target="_blank">Ir al Canal</a>
+        <button class="overlay-button-small" onclick="copyToClipboard('rsshub.app/telegram/channel/@unsotano22')">Copiar RSS</button>
+    </div>
+        </div>
             
             
         </div>
