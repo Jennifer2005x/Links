@@ -403,6 +403,11 @@
                 `;
             }
         }
+        
+        document.addEventListener('DOMContentLoaded', () => {
+    loadPage();
+    overlayButton.addEventListener('click', toggleOverlay);
+});
 
         function loadPage() {
             document.querySelector('.profile-image').src = CONFIG.profileImage;
@@ -487,46 +492,62 @@
 
         async function updateVisitorCount() {
     const countElement = document.getElementById('visitorCount');
+    const namespace = 'jennifer-links-counter'; // Un identificador único para tu sitio
+    const key = 'visits';
     
     try {
-        // Primer intento con CountAPI
-        const response = await fetch('https://api.countapi.xyz/hit/jennifer-links-page/visits', {
-            method: 'GET',
-            headers: {
-                'Cache-Control': 'no-cache'
-            }
-        });
+        // Primero intentamos obtener el contador
+        const response = await fetch(`https://api.countapi.xyz/hit/${namespace}/${key}`);
         
         if (!response.ok) {
-            throw new Error('Network response was not ok');
+            throw new Error('Error al obtener el contador');
         }
         
         const data = await response.json();
-        if (data && data.value) {
+        
+        // Actualizar el contador con animación
+        if (data.value) {
+            countElement.style.animation = 'none';
+            countElement.offsetHeight; // Trigger reflow
+            countElement.style.animation = 'countUp 0.5s ease-out';
             countElement.textContent = new Intl.NumberFormat('es-ES').format(data.value);
-        } else {
-            throw new Error('Invalid data format');
         }
     } catch (error) {
-        console.error('Error with CountAPI:', error);
-        
-        // Plan B: Usar localStorage como respaldo
-        try {
-            let count = localStorage.getItem('visitorCount');
-            if (!count) {
-                count = '1';
-                localStorage.setItem('visitorCount', count);
-            } else {
-                count = (parseInt(count) + 1).toString();
-                localStorage.setItem('visitorCount', count);
-            }
-            countElement.textContent = new Intl.NumberFormat('es-ES').format(parseInt(count));
-        } catch (backupError) {
-            console.error('Error with backup counter:', backupError);
-            countElement.textContent = '1';
-        }
+        console.error('Error:', error);
+        countElement.textContent = '?';
     }
 }
+
+// Modificar la función toggleOverlay para actualizar el contador cada vez que se abre
+function toggleOverlay() {
+    const overlay = document.getElementById('overlay-page');
+    const button = document.getElementById('overlay-button');
+    const isHidden = overlay.classList.contains('hidden');
+    
+    if (isHidden) {
+        overlay.classList.remove('hidden');
+        updateVisitorCount(); // Actualizar el contador cuando se abre el overlay
+        button.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="18" y1="6" x2="6" y2="18"></line>
+                <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+            <span>Cerrar</span>
+        `;
+    } else {
+        overlay.classList.add('hidden');
+        button.innerHTML = `
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="12" y1="5" x2="12" y2="19"></line>
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+            </svg>
+            <span>Más</span>
+        `;
+    }
+}
+
+// Asegurarse de que el contador se actualice cuando se carga la página
+
     </script>
 </body>
     </html>
