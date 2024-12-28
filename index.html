@@ -552,16 +552,16 @@ async function fetchAniListData() {
         const activity = await getLatestActivity(userId);
 
         const statusMap = {
-    'completed': 'ha completado',
-    'watching': 'está viendo',
-    'reading': 'está leyendo',
-    'paused': 'ha pausado',
-    'dropped': 'ha abandonado',
-    'planning': 'planea ver'  // Added planning status
+    'completed': 'Ha Completado',
+    'watching': 'Está Viendo',
+    'reading': 'Está Leyendo',
+    'paused': 'Ha Pausado',
+    'dropped': 'Ha Abandonado',
+    'planning': 'Planea Ver'  // Added planning status
 };
 
 if (activity.type === "ANIME_LIST" || activity.type === "MANGA_LIST") {
-    const status = statusMap[activity.status] || 'ha actualizado su actividad en';
+    const status = statusMap[activity.status] || 'Ha Actualizado Su Actividad En';
     document.getElementById('anilist-cover').src = activity.media.coverImage.large;
     document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
     
