@@ -259,9 +259,17 @@
         <a class="overlay-button-small" href="https://t.me/unsotano22" target="_blank">Ir al Canal</a>
         <button class="overlay-button-small" onclick="copyToClipboard('rsshub.app/telegram/channel/unsotano22')">Copiar RSS</button>
     </div>
-        </div>
-            
-            
+
+    <hr style="margin: 20px 0;">
+
+    <h2 class="small-title">AniList</h2>
+    <div class="card" id="anilist-card" aria-live="polite">
+       <img id="anilist-cover" src="" alt="Imagen de portada">
+       <div class="card-title" id="anilist-title">Cargando...</div>
+       <div class="card-progress" id="anilist-progress"></div>
+    </div>
+          
+          </div>    
         </div>
     </div>
 
@@ -425,9 +433,12 @@
         });
 
         document.addEventListener('DOMContentLoaded', () => {
-            loadPage();
-            overlayButton.addEventListener('click', toggleOverlay);
-        });
+    loadPage();
+    overlayButton.addEventListener('click', () => {
+        toggleOverlay();
+        fetchAniListData(); // Agregar esta línea para que se actualice cada vez que se abre el overlay
+    });
+});
 
         function copyToClipboard(text) {
             navigator.clipboard.writeText(text).then(function() {
@@ -435,7 +446,128 @@
             }, function(err) {
                 console.error('Error al copiar el enlace RSS: ', err);
             });
+
+         async function getUserId(username) {
+    const query = `
+        query ($username: String) {
+            User(name: $username) {
+                id
+            }
         }
+    `;
+
+    const variables = {
+        username: username
+    };
+
+    const url = "https://graphql.anilist.co";
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            query: query,
+            variables: variables
+        })
+    };
+
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    if (data && data.data && data.data.User) {
+        return data.data.User.id;
+    } else {
+        throw new Error('AniList user not found');
+    }
+}
+
+async function getLatestActivity(userId) {
+    const query = `
+        query ($user_id: Int) {
+            Page(perPage: 1) {
+                activities(userId: $user_id, sort: ID_DESC) {
+                    ... on ListActivity {
+                        type
+                        createdAt
+                        status
+                        progress
+                        media {
+                            title {
+                                romaji
+                            }
+                            coverImage {
+                                large
+                            }
+                        }
+                    }
+                    ... on TextActivity {
+                        type
+                        createdAt
+                        text
+                    }
+                }
+            }
+        }
+    `;
+
+    const variables = {
+        user_id: userId
+    };
+
+    const url = "https://graphql.anilist.co";
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        },
+        body: JSON.stringify({
+            query: query,
+            variables: variables
+        })
+    };
+
+    const response = await fetch(url, options);
+    const data = await response.json();
+
+    if (data && data.data && data.data.Page.activities.length > 0) {
+        return data.data.Page.activities[0];
+    } else {
+        throw new Error('No activities found');
+    }
+}
+
+async function fetchAniListData() {
+    try {
+        const userId = await getUserId("Jennifer2005x"); // Cambia esto por tu usuario de AniList
+        const activity = await getLatestActivity(userId);
+
+        const statusMap = {
+            'completed': 'ha completado',
+            'watching': 'está viendo',
+            'reading': 'está leyendo',
+            'paused': 'ha pausado',
+            'dropped': 'ha abandonado'
+        };
+
+        if (activity.type === "ANIME_LIST" || activity.type === "MANGA_LIST") {
+            const status = statusMap[activity.status] || 'ha actualizado su actividad en';
+            document.getElementById('anilist-cover').src = activity.media.coverImage.large;
+            document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
+            document.getElementById('anilist-progress').textContent = `Progreso: ${activity.progress}`;
+        } else if (activity.type === "TEXT") {
+            document.getElementById('anilist-title').textContent = activity.text;
+            document.getElementById('anilist-progress').textContent = '';
+        }
+    } catch (error) {
+        console.error('Error fetching AniList data:', error);
+        document.getElementById('anilist-title').textContent = "Error al cargar datos";
+    }
+}
     </script>
 </body>
     </html>
