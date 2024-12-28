@@ -546,7 +546,7 @@ async function getLatestActivity(userId) {
     }
 }
 
-        async function fetchAniListData() {
+    async function fetchAniListData() {
     try {
         const userId = await getUserId("Jennifer2005x");
         const activity = await getLatestActivity(userId);
@@ -560,25 +560,36 @@ async function getLatestActivity(userId) {
         };
 
         if (activity.type === "ANIME_LIST" || activity.type === "MANGA_LIST") {
-            const status = statusMap[activity.status] || 'ha actualizado su actividad en';
+            const status = statusMap[activity.status.toLowerCase()] || 'ha actualizado su actividad en';
             document.getElementById('anilist-cover').src = activity.media.coverImage.large;
             document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
             
-            // Solo mostrar el progreso si está viendo o leyendo
-            if (activity.status === 'watching' || activity.status === 'reading') {
+            // Añadimos console.log para debug
+            console.log('Status:', activity.status);
+            console.log('Progress:', activity.progress);
+            
+            // Convertimos el status a minúsculas para la comparación
+            const currentStatus = activity.status.toLowerCase();
+            if (currentStatus === 'watching' || currentStatus === 'current' || 
+                currentStatus === 'reading' || currentStatus === 'in_progress') {
                 document.getElementById('anilist-progress').textContent = `Progreso: ${activity.progress}`;
+                document.getElementById('anilist-progress').style.display = 'block';
             } else {
                 document.getElementById('anilist-progress').textContent = '';
+                document.getElementById('anilist-progress').style.display = 'none';
             }
         } else if (activity.type === "TEXT") {
+            document.getElementById('anilist-cover').src = '';
             document.getElementById('anilist-title').textContent = activity.text;
             document.getElementById('anilist-progress').textContent = '';
+            document.getElementById('anilist-progress').style.display = 'none';
         }
     } catch (error) {
         console.error('Error fetching AniList data:', error);
         document.getElementById('anilist-title').textContent = "Error al cargar datos";
+        document.getElementById('anilist-progress').style.display = 'none';
     }
- }
+        }
     </script>
 </body>
     </html>
