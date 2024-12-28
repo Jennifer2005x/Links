@@ -552,22 +552,30 @@ async function fetchAniListData() {
         const activity = await getLatestActivity(userId);
 
         const statusMap = {
-            'completed': 'ha completado',
-            'watching': 'está viendo',
-            'reading': 'está leyendo',
-            'paused': 'ha pausado',
-            'dropped': 'ha abandonado'
-        };
+    'completed': 'ha completado',
+    'watching': 'está viendo',
+    'reading': 'está leyendo',
+    'paused': 'ha pausado',
+    'dropped': 'ha abandonado',
+    'planning': 'planea ver'  // Added planning status
+};
 
-        if (activity.type === "ANIME_LIST" || activity.type === "MANGA_LIST") {
-            const status = statusMap[activity.status] || 'ha actualizado su actividad en';
-            document.getElementById('anilist-cover').src = activity.media.coverImage.large;
-            document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
-            document.getElementById('anilist-progress').textContent = `Progreso: ${activity.progress}`;
-        } else if (activity.type === "TEXT") {
-            document.getElementById('anilist-title').textContent = activity.text;
-            document.getElementById('anilist-progress').textContent = '';
-        }
+if (activity.type === "ANIME_LIST" || activity.type === "MANGA_LIST") {
+    const status = statusMap[activity.status] || 'ha actualizado su actividad en';
+    document.getElementById('anilist-cover').src = activity.media.coverImage.large;
+    document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
+    
+    // Show progress for watching and reading status
+    if (activity.status === 'watching' || activity.status === 'reading') {
+        document.getElementById('anilist-progress').textContent = `Progreso: ${activity.progress}`;
+    } else {
+        document.getElementById('anilist-progress').textContent = '';
+    }
+} else if (activity.type === "TEXT") {
+    document.getElementById('anilist-title').textContent = activity.text;
+    document.getElementById('anilist-progress').textContent = '';
+}
+        
     } catch (error) {
         console.error('Error fetching AniList data:', error);
         document.getElementById('anilist-title').textContent = "Error al cargar datos";
