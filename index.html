@@ -546,9 +546,9 @@ async function getLatestActivity(userId) {
     }
 }
 
-async function fetchAniListData() {
+        async function fetchAniListData() {
     try {
-        const userId = await getUserId("Jennifer2005x"); // Cambia esto por tu usuario de AniList
+        const userId = await getUserId("Jennifer2005x");
         const activity = await getLatestActivity(userId);
 
         const statusMap = {
@@ -563,7 +563,13 @@ async function fetchAniListData() {
             const status = statusMap[activity.status] || 'ha actualizado su actividad en';
             document.getElementById('anilist-cover').src = activity.media.coverImage.large;
             document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
-            document.getElementById('anilist-progress').textContent = `Progreso: ${activity.progress}`;
+            
+            // Solo mostrar el progreso si está viendo o leyendo
+            if (activity.status === 'watching' || activity.status === 'reading') {
+                document.getElementById('anilist-progress').textContent = `Progreso: ${activity.progress}`;
+            } else {
+                document.getElementById('anilist-progress').textContent = '';
+            }
         } else if (activity.type === "TEXT") {
             document.getElementById('anilist-title').textContent = activity.text;
             document.getElementById('anilist-progress').textContent = '';
@@ -572,7 +578,7 @@ async function fetchAniListData() {
         console.error('Error fetching AniList data:', error);
         document.getElementById('anilist-title').textContent = "Error al cargar datos";
     }
-        }
+ }
     </script>
 </body>
     </html>
