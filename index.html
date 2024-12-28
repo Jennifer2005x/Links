@@ -566,7 +566,7 @@ async function fetchAniListData() {
         };
 
         if (activity && activity.media) {
-            const status = statusMap[activity.status] || 'ha actualizado';
+            const status = statusMap[activity.status] || 'Ha Actualizado';
             
             document.getElementById('anilist-cover').src = activity.media.coverImage.large;
             document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
