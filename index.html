@@ -548,7 +548,7 @@ async function getLatestActivity(userId) {
 
 async function fetchAniListData() {
     try {
-        const userId = await getUserId("Jennifer2005x"); // Cambia esto por tu usuario de AniList
+        const userId = await getUserId("Jennifer2005x");
         const activity = await getLatestActivity(userId);
 
         const statusMap = {
@@ -556,14 +556,22 @@ async function fetchAniListData() {
             'watching': 'está viendo',
             'reading': 'está leyendo',
             'paused': 'ha pausado',
-            'dropped': 'ha abandonado'
+            'dropped': 'ha abandonado',
+            'planning': 'planea ver', // Agregando el estado planning
+            'plan_to_watch': 'planea ver', // Algunas veces puede venir en este formato
+            'plan_to_read': 'planea leer'  // Para manga
         };
 
         if (activity.type === "ANIME_LIST" || activity.type === "MANGA_LIST") {
-            const status = statusMap[activity.status] || 'ha actualizado su actividad en';
+            const status = statusMap[activity.status.toLowerCase()] || 'ha actualizado su actividad en';
             document.getElementById('anilist-cover').src = activity.media.coverImage.large;
             document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
-            document.getElementById('anilist-progress').textContent = `Progreso: ${activity.progress}`;
+            // Solo mostrar el progreso si no está en estado de planificación
+            if (activity.status.toLowerCase() !== 'planning' && activity.status.toLowerCase() !== 'plan_to_watch' && activity.status.toLowerCase() !== 'plan_to_read') {
+                document.getElementById('anilist-progress').textContent = `Progreso: ${activity.progress}`;
+            } else {
+                document.getElementById('anilist-progress').textContent = ''; // No mostrar progreso para items planeados
+            }
         } else if (activity.type === "TEXT") {
             document.getElementById('anilist-title').textContent = activity.text;
             document.getElementById('anilist-progress').textContent = '';
