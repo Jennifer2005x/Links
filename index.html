@@ -452,104 +452,12 @@
             });
         }
 
-        async function getUserId(username) {
-    const query = `
-        query ($username: String) {
-            User(name: $username) {
-                id
-            }
-        }
-    `;
-
-    const variables = {
-        username: username
-    };
-
-    const url = "https://graphql.anilist.co";
-
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            query: query,
-            variables: variables
-        })
-    };
-
-    const response = await fetch(url, options);
-    const data = await response.json();
-
-    if (data && data.data && data.data.User) {
-        return data.data.User.id;
-    } else {
-        throw new Error('AniList user not found');
-    }
-}
-
-async function getLatestActivity(userId) {
-    const query = `
-        query ($user_id: Int) {
-            Page(perPage: 1) {
-                activities(userId: $user_id, sort: ID_DESC) {
-                    ... on ListActivity {
-                        type
-                        createdAt
-                        status
-                        progress
-                        media {
-                            title {
-                                romaji
-                            }
-                            coverImage {
-                                large
-                            }
-                        }
-                    }
-                    ... on TextActivity {
-                        type
-                        createdAt
-                        text
-                    }
-                }
-            }
-        }
-    `;
-
-    const variables = {
-        user_id: userId
-    };
-
-    const url = "https://graphql.anilist.co";
-
-    const options = {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'Accept': 'application/json',
-        },
-        body: JSON.stringify({
-            query: query,
-            variables: variables
-        })
-    };
-
-    const response = await fetch(url, options);
-    const data = await response.json();
-
-    if (data && data.data && data.data.Page.activities.length > 0) {
-        return data.data.Page.activities[0];
-    } else {
-        throw new Error('No activities found');
-    }
-}
-
-async function fetchAniListData() {
+        async function fetchAniListData() {
     try {
-        const userId = await getUserId("Jennifer2005x"); // Cambia esto por tu usuario de AniList
+        const userId = await getUserId("Jennifer2005x");
         const activity = await getLatestActivity(userId);
+
+        console.log('Activity received:', activity); // Log para ver la actividad completa
 
         const statusMap = {
             'completed': 'Ha Completado',
@@ -560,25 +468,38 @@ async function fetchAniListData() {
         };
 
         if (activity.type === "ANIME_LIST" || activity.type === "MANGA_LIST") {
-    const status = statusMap[activity.status] || 'Ha Actualizado Su Actividad En';
-    document.getElementById('anilist-cover').src = activity.media.coverImage.large;
-    document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
-    
-    if (activity.status === 'watching' || activity.status === 'reading') {
-        document.getElementById('anilist-progress').textContent = `Progreso: ${activity.progress}`;
-    } else {
-        document.getElementById('anilist-progress').textContent = '';
-    }
-} else if (activity.type === "TEXT") {
-    document.getElementById('anilist-title').textContent = activity.text;
-    document.getElementById('anilist-progress').textContent = '';
+            console.log('Status:', activity.status); // Log para ver el estado
+            console.log('Progress:', activity.progress); // Log para ver el progreso
+
+            const status = statusMap[activity.status.toLowerCase()] || 'Ha Actualizado Su Actividad En';
+            
+            // Actualizar la imagen de portada
+            document.getElementById('anilist-cover').src = activity.media.coverImage.large;
+            
+            // Actualizar el título
+            document.getElementById('anilist-title').textContent = `${status} ${activity.media.title.romaji}`;
+            
+            // Mostrar progreso solo para watching o reading
+            const progressElement = document.getElementById('anilist-progress');
+            if (activity.status.toLowerCase() === 'watching' || activity.status.toLowerCase() === 'reading') {
+                progressElement.textContent = `Progreso: ${activity.progress}`;
+                progressElement.style.display = 'block'; // Asegurarse que sea visible
+            } else {
+                progressElement.textContent = '';
+                progressElement.style.display = 'none'; // Ocultar el elemento
+            }
+
+        } else if (activity.type === "TEXT") {
+            document.getElementById('anilist-title').textContent = activity.text;
+            document.getElementById('anilist-progress').style.display = 'none';
         }
-    
     } catch (error) {
         console.error('Error fetching AniList data:', error);
         document.getElementById('anilist-title').textContent = "Error al cargar datos";
+        document.getElementById('anilist-progress').style.display = 'none';
     }
-        }
+                                  }
+    
     </script>
 </body>
     </html>
