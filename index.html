@@ -238,16 +238,23 @@
 
                 activities.forEach(activity => {
                     if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
+                        console.log('Estado recibido:', activity.status); // Debug line
+                        
                         const statusMap = {
-                            'completed': '✅ Ha Completado',
-                            'watching': '👀 Está Viendo',
-                            'reading': '📖 Está Leyendo',
-                            'paused': '⏸️ Ha Pausado',
-                            'dropped': '❌ Ha Abandonado',
-                            'planning': '📝 Planea Ver'
+                            'CURRENT': '👀 Está Viendo',
+                            'COMPLETED': '✅ Ha Completado',
+                            'WATCHING': '👀 Está Viendo',
+                            'READING': '📖 Está Leyendo',
+                            'PAUSED': '⏸️ Ha Pausado',
+                            'DROPPED': '❌ Ha Abandonado',
+                            'PLANNING': '📝 Planea Ver',
+                            'PLAN_TO_WATCH': '📝 Planea Ver'
                         };
 
-                        const status = statusMap[activity.status] || '🔄 Ha Actualizado';
+                        // Intentar obtener el estado mapeado con más flexibilidad
+                        const status = statusMap[activity.status] || statusMap[activity.status?.toUpperCase()] || '🔄 Ha Actualizado';
+                        console.log('Estado mapeado:', status); // Debug line
+
                         html += `
                             <div class="activity-item">
                                 <img class="activity-cover" src="${activity.media.coverImage.large}" alt="${activity.media.title.romaji}">
@@ -288,4 +295,4 @@
         document.addEventListener('DOMContentLoaded', fetchAniListData);
     </script>
 </body>
-</html>
+    </html>
