@@ -221,7 +221,7 @@
             const status = activity.status.toLowerCase();
             
             // Solo mostrar progreso si está viendo o leyendo
-            if (status === 'current' || status === 'watching' || status === 'in_progress') {
+            if (status === 'read chapter' || status === 'watched episode') {
                 const total = activity.media.episodes || activity.media.chapters || '?';
                 const current = activity.progress || 0;
                 
