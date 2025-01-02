@@ -242,7 +242,6 @@
 
         .activity-item {
     display: flex;
-    align-items: center; /* Centra verticalmente */
     gap: 10px;
         }
 
@@ -251,16 +250,17 @@
         }
 
         .activity-cover {
-            width: 60px;
-            height: 85px;
-            border-radius: 8px;
-            object-fit: cover;
+    width: 45px;
+    height: 65px;
+    border-radius: 8px;
+    object-fit: cover;
         }
-
+        
         .activity-content {
     display: flex;
     flex-direction: column;
-    justify-content: center; /* Centra verticalmente el contenido */
+    justify-content: center; /* Centra el contenido verticalmente */
+    min-height: 85px; /* Altura aproximada de la portada para asegurar centrado */
         }
 
         .activity-title {
