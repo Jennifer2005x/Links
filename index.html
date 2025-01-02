@@ -246,9 +246,9 @@
         .activity-item {
     padding: 15px;
     border-bottom: 1px solid var(--border-color);
-    display: flex;         /* Mantener diseño horizontal */
+    display: flex;
     gap: 15px;
-    align-items: start;    /* Alinear al inicio */
+    align-items: flex-start; /* Alinear desde arriba */
         }
 
         .activity-item:last-child {
@@ -265,7 +265,9 @@
 
         .activity-content {
     flex: 1;
-    text-align: center;  /* Centrar contenido de actividad */
+    display: flex;
+    flex-direction: column;
+    padding-top: 5px; /* Ajustar el espacio superior para alinear con la portada */
         }
 
         .activity-title {
