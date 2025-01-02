@@ -246,10 +246,9 @@
         .activity-item {
     padding: 15px;
     border-bottom: 1px solid var(--border-color);
-    display: flex;
-    flex-direction: column;  /* Cambiar a columna para centrar */
-    align-items: center;    /* Centrar elementos */
+    display: flex;         /* Mantener diseño horizontal */
     gap: 15px;
+    align-items: start;    /* Alinear al inicio */
         }
 
         .activity-item:last-child {
@@ -257,10 +256,11 @@
         }
 
         .activity-cover {
-            width: 60px;
-            height: 85px;
-            border-radius: 8px;
-            object-fit: cover;
+    width: 60px;
+    height: 85px;
+    border-radius: 8px;
+    object-fit: cover;
+    /* Se eliminan márgenes automáticos para mantener posición original */
         }
 
         .activity-content {
