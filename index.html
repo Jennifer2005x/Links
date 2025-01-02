@@ -103,15 +103,6 @@
             padding: 20px;
             font-size: 0.9rem;
         }
-
-        .debug-info {
-            background: #444;
-            padding: 8px;
-            margin: 5px 0;
-            font-size: 12px;
-            border-radius: 4px;
-            color: #fff;
-        }
     </style>
 </head>
 <body>
@@ -221,7 +212,7 @@
             const status = activity.status.toLowerCase();
             
             // Solo mostrar progreso si está viendo o leyendo
-            if (status === 'read chapter' || status === 'watched episode') {
+            if (status === 'watched episode' || status === 'read chapter') {
                 const total = activity.media.episodes || activity.media.chapters || '?';
                 const current = activity.progress || 0;
                 
@@ -231,7 +222,7 @@
                 return `${type} ${unit} ${current}${total !== '?' ? ` de ${total}` : ''}`;
             }
             
-            return ''; // No mostrar progreso para otros estados
+            return '';
         }
 
         function getStatus(activity) {
@@ -254,7 +245,7 @@
                 return '📖 Planea Leer';
             }
 
-            return baseStatusMap[status] || `🔄 Estado no mapeado: ${status}`;
+            return baseStatusMap[status] || '🔄 Ha Actualizado';
         }
 
         async function fetchAniListData() {
@@ -277,14 +268,6 @@
 
                 activities.forEach(activity => {
                     if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
-                        // Información de debug
-                        const debugInfo = `
-                            <div class="debug-info">
-                                <strong>Estado Original:</strong> ${activity.status}<br>
-                                <strong>Tipo:</strong> ${activity.type}
-                            </div>
-                        `;
-
                         const progressInfo = formatProgress(activity);
                         
                         html += `
@@ -292,7 +275,6 @@
                                 <img class="activity-cover" src="${activity.media.coverImage.large}" alt="${activity.media.title.romaji}">
                                 <div class="activity-content">
                                     <div class="activity-title">${activity.media.title.romaji}</div>
-                                    ${debugInfo}
                                     <div class="activity-status">${getStatus(activity)}</div>
                                     ${progressInfo ? `<div class="activity-progress">${progressInfo}</div>` : ''}
                                     <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
