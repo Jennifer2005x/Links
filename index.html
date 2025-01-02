@@ -103,6 +103,15 @@
             padding: 20px;
             font-size: 0.9rem;
         }
+
+        .debug-info {
+            background: #444;
+            padding: 8px;
+            margin: 5px 0;
+            font-size: 12px;
+            border-radius: 4px;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -221,26 +230,26 @@
         function getStatus(activity) {
             const status = activity.status.toLowerCase();
             
-            // Mapa de estados base
             const baseStatusMap = {
                 'completed': '✅ Completado',
-                'in progress': '👀 Viendo',
-                'reading': '📖 Leyendo',
+                'current': '👀 Viendo',
+                'watching': '👀 Viendo',
+                'in_progress': '👀 Viendo',
                 'paused': '⏸️ Ha Pausado',
-                'dropped': '❌ Ha Abandonado'
+                'dropped': '❌ Ha Abandonado',
+                'planning': '📝 Planea Ver',
+                'repeating': '🔄 Viendo de nuevo'
             };
 
-            // Si el estado es "planning", determinar si es anime o manga
             if (status === 'planning' || status === 'plan_to_watch' || status === 'plans to watch') {
                 return activity.type === 'ANIME_LIST' ? '👀 Planea Ver' : '📖 Planea Leer';
             }
 
-            // Si el estado es "plan to read" o similar
             if (status === 'plan_to_read' || status === 'plans to read') {
                 return '📖 Planea Leer';
             }
 
-            return baseStatusMap[status] || '🔄 Ha Actualizado';
+            return baseStatusMap[status] || `🔄 Estado no mapeado: ${status}`;
         }
 
         async function fetchAniListData() {
@@ -263,13 +272,21 @@
 
                 activities.forEach(activity => {
                     if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
-                        const status = getStatus(activity);
+                        // Información de debug
+                        const debugInfo = `
+                            <div class="debug-info">
+                                <strong>Estado Original:</strong> ${activity.status}<br>
+                                <strong>Tipo:</strong> ${activity.type}
+                            </div>
+                        `;
+
                         html += `
                             <div class="activity-item">
                                 <img class="activity-cover" src="${activity.media.coverImage.large}" alt="${activity.media.title.romaji}">
                                 <div class="activity-content">
                                     <div class="activity-title">${activity.media.title.romaji}</div>
-                                    <div class="activity-status">${status}</div>
+                                    ${debugInfo}
+                                    <div class="activity-status">${getStatus(activity)}</div>
                                     <div class="activity-progress">${formatProgress(activity)}</div>
                                     <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
                                 </div>
@@ -291,7 +308,6 @@
                 cardContent.innerHTML = html;
 
             } catch (error) {
-                console.error('Error:', error);
                 document.getElementById('anilist-card').innerHTML = `
                     <div class="loading">
                         ❌ Error al cargar los datos de AniList
@@ -304,4 +320,4 @@
         document.addEventListener('DOMContentLoaded', fetchAniListData);
     </script>
 </body>
-    </html>
+</html>
