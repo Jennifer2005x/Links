@@ -103,6 +103,15 @@
             padding: 20px;
             font-size: 0.9rem;
         }
+
+        .debug-info {
+            background: #444;
+            padding: 8px;
+            margin: 5px 0;
+            font-size: 12px;
+            border-radius: 4px;
+            color: #fff;
+        }
     </style>
 </head>
 <body>
@@ -209,19 +218,25 @@
         function formatProgress(activity) {
             if (!activity.media) return '';
             
-            const total = activity.media.episodes || activity.media.chapters || '?';
-            const current = activity.progress || 0;
+            const status = activity.status.toLowerCase();
             
-            const type = activity.type === 'ANIME_LIST' ? '📺' : '📖';
-            const unit = activity.type === 'ANIME_LIST' ? 'Episodio' : 'Capítulo';
+            // Solo mostrar progreso si está viendo o leyendo
+            if (status === 'current' || status === 'watching' || status === 'in_progress') {
+                const total = activity.media.episodes || activity.media.chapters || '?';
+                const current = activity.progress || 0;
+                
+                const type = activity.type === 'ANIME_LIST' ? '📺' : '📖';
+                const unit = activity.type === 'ANIME_LIST' ? 'Episodio' : 'Capítulo';
+                
+                return `${type} ${unit} ${current}${total !== '?' ? ` de ${total}` : ''}`;
+            }
             
-            return `${type} ${unit} ${current}${total !== '?' ? ` de ${total}` : ''}`;
+            return ''; // No mostrar progreso para otros estados
         }
 
         function getStatus(activity) {
             const status = activity.status.toLowerCase();
             
-            // Mapa de estados base
             const baseStatusMap = {
                 'completed': '✅ Completado',
                 'watched episode': '👀 Viendo',
@@ -231,17 +246,15 @@
                 'dropped': '❌ Ha Abandonado'
             };
 
-            // Si el estado es "planning", determinar si es anime o manga
             if (status === 'planning' || status === 'plan_to_watch' || status === 'plans to watch') {
                 return activity.type === 'ANIME_LIST' ? '👀 Planea Ver' : '📖 Planea Leer';
             }
 
-            // Si el estado es "plan to read" o similar
             if (status === 'plan_to_read' || status === 'plans to read') {
                 return '📖 Planea Leer';
             }
 
-            return baseStatusMap[status] || '🔄 Ha Actualizado';
+            return baseStatusMap[status] || `🔄 Estado no mapeado: ${status}`;
         }
 
         async function fetchAniListData() {
@@ -264,14 +277,24 @@
 
                 activities.forEach(activity => {
                     if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
-                        const status = getStatus(activity);
+                        // Información de debug
+                        const debugInfo = `
+                            <div class="debug-info">
+                                <strong>Estado Original:</strong> ${activity.status}<br>
+                                <strong>Tipo:</strong> ${activity.type}
+                            </div>
+                        `;
+
+                        const progressInfo = formatProgress(activity);
+                        
                         html += `
                             <div class="activity-item">
                                 <img class="activity-cover" src="${activity.media.coverImage.large}" alt="${activity.media.title.romaji}">
                                 <div class="activity-content">
                                     <div class="activity-title">${activity.media.title.romaji}</div>
-                                    <div class="activity-status">${status}</div>
-                                    <div class="activity-progress">${formatProgress(activity)}</div>
+                                    ${debugInfo}
+                                    <div class="activity-status">${getStatus(activity)}</div>
+                                    ${progressInfo ? `<div class="activity-progress">${progressInfo}</div>` : ''}
                                     <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
                                 </div>
                             </div>
@@ -292,7 +315,6 @@
                 cardContent.innerHTML = html;
 
             } catch (error) {
-                console.error('Error:', error);
                 document.getElementById('anilist-card').innerHTML = `
                     <div class="loading">
                         ❌ Error al cargar los datos de AniList
@@ -305,4 +327,4 @@
         document.addEventListener('DOMContentLoaded', fetchAniListData);
     </script>
 </body>
-</html>
+    </html>
