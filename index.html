@@ -218,6 +218,31 @@
             return `${type} ${unit} ${current}${total !== '?' ? ` de ${total}` : ''}`;
         }
 
+        function getStatus(activity) {
+            const status = activity.status.toLowerCase();
+            
+            // Mapa de estados base
+            const baseStatusMap = {
+                'completed': '✅ Completado',
+                'watching': '👀 Viendo',
+                'reading': '📖 Leyendo',
+                'paused': '⏸️ Ha Pausado',
+                'dropped': '❌ Ha Abandonado'
+            };
+
+            // Si el estado es "planning", determinar si es anime o manga
+            if (status === 'planning' || status === 'plan_to_watch' || status === 'plans to watch') {
+                return activity.type === 'ANIME_LIST' ? '👀 Planea Ver' : '📖 Planea Leer';
+            }
+
+            // Si el estado es "plan to read" o similar
+            if (status === 'plan_to_read' || status === 'plans to read') {
+                return '📖 Planea Leer';
+            }
+
+            return baseStatusMap[status] || '🔄 Ha Actualizado';
+        }
+
         async function fetchAniListData() {
             try {
                 const cardContent = document.getElementById('anilist-card');
@@ -238,19 +263,7 @@
 
                 activities.forEach(activity => {
                     if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
-                        const statusMap = {
-                            'completed': '✅ Completado',
-                            'watching': '👀 Viendo',
-                            'reading': '📖 Leyendo',
-                            'paused': '⏸️ Ha Pausado',
-                            'dropped': '❌ Ha Abandonado',
-                            'planning': '📝 Planea Ver'
-                            'plans to read': '📖 Planea Leer'
-                            'plans to watch': '👀 Planea Ver'
-                        
-                        };
-
-                        const status = statusMap[activity.status] || '🔄 Ha Actualizado';
+                        const status = getStatus(activity);
                         html += `
                             <div class="activity-item">
                                 <img class="activity-cover" src="${activity.media.coverImage.large}" alt="${activity.media.title.romaji}">
@@ -291,4 +304,4 @@
         document.addEventListener('DOMContentLoaded', fetchAniListData);
     </script>
 </body>
-</html>
+    </html>
