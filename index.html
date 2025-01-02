@@ -3,20 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AniList Card</title>
+    <title>Mi Actividad en AniList</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-color-dark: #121212;
-            --text-color-dark: #ffffff;
-            --card-bg-dark: #2c2c2c;
-            --bg-color-light: #ffffff;
-            --text-color-light: #000000;
-            --card-bg-light: #f2f2f2;
-            
-            --bg-color: var(--bg-color-light);
-            --text-color: var(--text-color-light);
-            --card-bg: var(--card-bg-light);
+            --bg-color: #121212;
+            --text-color: #ffffff;
+            --card-bg: #2c2c2c;
+            --card-hover: #3c3c3c;
+            --border-color: #404040;
         }
 
         body {
@@ -29,151 +24,268 @@
             min-height: 100vh;
             margin: 0;
             padding: 20px;
+            box-sizing: border-box;
         }
 
         .container {
             width: 100%;
-            max-width: 400px;
+            max-width: 480px;
         }
 
         .card {
             background-color: var(--card-bg);
-            padding: 20px;
             border-radius: 15px;
-            text-align: center;
-            border: 2px solid rgba(128, 128, 128, 0.2);
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            border: 1px solid var(--border-color);
         }
 
-        .card img {
-            max-width: 150px;
+        .stats-container {
+            background-color: rgba(255, 255, 255, 0.1);
             border-radius: 10px;
-            margin-bottom: 15px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-            transition: transform 0.2s ease;
+            padding: 15px;
+            margin-bottom: 20px;
         }
 
-        .card img:hover {
-            transform: scale(1.05);
+        .activity-item {
+            padding: 15px;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            gap: 15px;
+            align-items: start;
         }
 
-        .title {
-            font-size: 1.2em;
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+
+        .activity-cover {
+            width: 60px;
+            height: 85px;
+            border-radius: 8px;
+            object-fit: cover;
+        }
+
+        .activity-content {
+            flex: 1;
+        }
+
+        .activity-title {
             font-weight: 600;
-            margin: 10px 0;
+            margin-bottom: 5px;
+            font-size: 0.95rem;
         }
 
-        .progress {
-            margin: 10px 0;
-            font-size: 0.9em;
+        .activity-status {
+            font-size: 0.85rem;
+            opacity: 0.8;
+            margin-bottom: 3px;
         }
 
-        .stats {
-            margin-top: 15px;
-            padding-top: 15px;
-            border-top: 1px solid rgba(128, 128, 128, 0.2);
+        .activity-progress {
+            font-size: 0.85rem;
+            color: #a0a0a0;
         }
 
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg-color: var(--bg-color-dark);
-                --text-color: var(--text-color-dark);
-                --card-bg: var(--card-bg-dark);
-            }
+        .activity-timestamp {
+            font-size: 0.75rem;
+            opacity: 0.6;
+            margin-top: 5px;
+        }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            font-size: 0.9rem;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <div class="card" id="anilist-card">
-            <img id="anilist-cover" src="/api/placeholder/150/225" alt="Anime Cover">
-            <div id="anilist-title" class="title">Cargando...</div>
-            <div id="anilist-progress" class="progress"></div>
-            <div id="anilist-stats" class="stats"></div>
+            <div class="loading">Cargando... 🔄</div>
         </div>
     </div>
 
     <script>
-        async function fetchAniListData() {
-            try {
-                const response = await fetch('https://graphql.anilist.co', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Accept': 'application/json',
-                    },
-                    body: JSON.stringify({
-                        query: `
-                            query {
-                                User(name: "Jennifer2005x") {
-                                    id
-                                    name
-                                    statistics {
-                                        anime {
-                                            count
-                                            episodesWatched
-                                            minutesWatched
-                                        }
-                                    }
-                                    activities(page: 1, perPage: 1) {
-                                        ... on ListActivity {
-                                            status
-                                            progress
-                                            media {
-                                                id
-                                                title {
-                                                    userPreferred
-                                                }
-                                                coverImage {
-                                                    medium
-                                                }
-                                                episodes
-                                                status
-                                            }
-                                        }
-                                    }
-                                }
+        async function getUserId(username) {
+            const query = `
+                query ($username: String) {
+                    User(name: $username) {
+                        id
+                        statistics {
+                            anime {
+                                count
+                                minutesWatched
+                                episodesWatched
                             }
-                        `
-                    })
-                });
-
-                const data = await response.json();
-                if (data.data && data.data.User) {
-                    const user = data.data.User;
-                    const activity = user.activities[0];
-                    
-                    if (activity && activity.media) {
-                        // Actualizar imagen
-                        document.getElementById('anilist-cover').src = activity.media.coverImage.medium;
-                        
-                        // Actualizar título
-                        document.getElementById('anilist-title').textContent = 
-                            `📺 ${activity.media.title.userPreferred}`;
-                        
-                        // Actualizar progreso
-                        document.getElementById('anilist-progress').textContent = 
-                            `✨ Episodio ${activity.progress}/${activity.media.episodes || '?'}`;
-                        
-                        // Actualizar estadísticas
-                        document.getElementById('anilist-stats').innerHTML = `
-                            📊 Total Anime: ${user.statistics.anime.count}<br>
-                            ⌛ Episodios Vistos: ${user.statistics.anime.episodesWatched}<br>
-                            ⏱️ Minutos Totales: ${user.statistics.anime.minutesWatched}
-                        `;
+                            manga {
+                                count
+                                chaptersRead
+                                volumesRead
+                            }
+                        }
                     }
                 }
+            `;
+
+            const variables = { username: username };
+            const response = await fetch("https://graphql.anilist.co", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ query, variables })
+            });
+
+            const data = await response.json();
+            return data?.data?.User;
+        }
+
+        async function getLatestActivities(userId) {
+            const query = `
+                query ($userId: Int) {
+                    Page(perPage: 5) {
+                        activities(userId: $userId, sort: ID_DESC) {
+                            ... on ListActivity {
+                                type
+                                createdAt
+                                status
+                                progress
+                                media {
+                                    title {
+                                        romaji
+                                        english
+                                    }
+                                    coverImage {
+                                        large
+                                    }
+                                    format
+                                    episodes
+                                    chapters
+                                }
+                            }
+                            ... on TextActivity {
+                                type
+                                createdAt
+                                text
+                            }
+                        }
+                    }
+                }
+            `;
+
+            const variables = { userId: userId };
+            const response = await fetch("https://graphql.anilist.co", {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                },
+                body: JSON.stringify({ query, variables })
+            });
+
+            const data = await response.json();
+            return data?.data?.Page?.activities || [];
+        }
+
+        function formatTimestamp(timestamp) {
+            const date = new Date(timestamp * 1000);
+            return date.toLocaleDateString('es-ES', {
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+
+        function formatProgress(activity) {
+            if (!activity.media) return '';
+            
+            const total = activity.media.episodes || activity.media.chapters || '?';
+            const current = activity.progress || 0;
+            
+            const type = activity.type === 'ANIME_LIST' ? '📺' : '📖';
+            const unit = activity.type === 'ANIME_LIST' ? 'Episodio' : 'Capítulo';
+            
+            return `${type} ${unit} ${current}${total !== '?' ? ` de ${total}` : ''}`;
+        }
+
+        async function fetchAniListData() {
+            try {
+                const cardContent = document.getElementById('anilist-card');
+                const userData = await getUserId("Jennifer2005x");
+                const activities = await getLatestActivities(userData.id);
+                const stats = userData.statistics;
+
+                let html = `
+                    <div class="section-title">📊 Estadísticas</div>
+                    <div class="stats-container">
+                        <div>📺 Anime: ${stats.anime.count} completados</div>
+                        <div>⌚ ${Math.floor(stats.anime.minutesWatched / 60)} horas vistas</div>
+                        <div>📖 Manga: ${stats.manga.count} completados</div>
+                        <div>📑 ${stats.manga.chaptersRead} capítulos leídos</div>
+                    </div>
+                    <div class="section-title">🔄 Actividad Reciente</div>
+                `;
+
+                activities.forEach(activity => {
+                    if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
+                        const statusMap = {
+                            'completed': '✅ Ha Completado',
+                            'watching': '👀 Está Viendo',
+                            'reading': '📖 Está Leyendo',
+                            'paused': '⏸️ Ha Pausado',
+                            'dropped': '❌ Ha Abandonado',
+                            'planning': '📝 Planea Ver'
+                        };
+
+                        const status = statusMap[activity.status] || '🔄 Ha Actualizado';
+                        html += `
+                            <div class="activity-item">
+                                <img class="activity-cover" src="${activity.media.coverImage.large}" alt="${activity.media.title.romaji}">
+                                <div class="activity-content">
+                                    <div class="activity-title">${activity.media.title.romaji}</div>
+                                    <div class="activity-status">${status}</div>
+                                    <div class="activity-progress">${formatProgress(activity)}</div>
+                                    <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (activity.type === 'TEXT') {
+                        html += `
+                            <div class="activity-item">
+                                <div class="activity-content">
+                                    <div class="activity-status">💭 Publicación</div>
+                                    <div class="activity-title">${activity.text}</div>
+                                    <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+
+                cardContent.innerHTML = html;
+
             } catch (error) {
                 console.error('Error:', error);
-                document.getElementById('anilist-title').textContent = '❌ Error al cargar datos';
+                document.getElementById('anilist-card').innerHTML = `
+                    <div class="loading">
+                        ❌ Error al cargar los datos de AniList
+                    </div>
+                `;
             }
         }
 
-        // Cargar datos cuando la página esté lista
+        // Iniciar la carga de datos cuando la página esté lista
         document.addEventListener('DOMContentLoaded', fetchAniListData);
-
-        // Actualizar datos cada 5 minutos
-        setInterval(fetchAniListData, 5 * 60 * 1000);
     </script>
 </body>
 </html>
