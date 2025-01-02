@@ -240,11 +240,12 @@
                     if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
                         const statusMap = {
                             'completed': '✅ Ha Completado',
-                            'watching': '👀 Está Viendo',
+                            'watch': '👀 Está Viendo',
                             'reading': '📖 Está Leyendo',
                             'paused': '⏸️ Ha Pausado',
                             'dropped': '❌ Ha Abandonado',
                             'plans to watch': '👀 Planea Ver'
+                            'plans to read': '📄 Planea Leer'
                         };
 
                         const status = statusMap[activity.status] || '🔄 Ha Actualizado';
