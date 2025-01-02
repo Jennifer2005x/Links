@@ -239,12 +239,12 @@
                 activities.forEach(activity => {
                     if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
                         const statusMap = {
-                            'completed': '✅ Ha Completado',
-                            'watching': '👀 Está Viendo',
-                            'reading': '📖 Está Leyendo',
-                            'paused': '⏸️ Ha Pausado',
-                            'dropped': '❌ Ha Abandonado',
-                            'planning': '📝 Planea Ver'
+                            'COMPLETED': '✅ Ha Completado',
+                            'WATCHING': '👀 Está Viendo',
+                            'READING': '📖 Está Leyendo',
+                            'PAUSED': '⏸️ Ha Pausado',
+                            'DROPPED': '❌ Ha Abandonado',
+                            'PLANNING': '📝 Planea Ver'
                         };
 
                         const status = statusMap[activity.status] || '🔄 Ha Actualizado';
