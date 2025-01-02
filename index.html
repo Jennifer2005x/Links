@@ -221,7 +221,7 @@
         async function fetchAniListData() {
             try {
                 const cardContent = document.getElementById('anilist-card');
-                const userData = await getUserId("Jennifer2005x");
+                const userData = await getUserId("TheJNXx");
                 const activities = await getLatestActivities(userData.id);
                 const stats = userData.statistics;
 
@@ -238,8 +238,6 @@
 
                 activities.forEach(activity => {
                     if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
-                        console.log('Estado recibido:', activity.status); // Debug line
-                        
                         const statusMap = {
                             'CURRENT': '👀 Está Viendo',
                             'COMPLETED': '✅ Ha Completado',
@@ -252,19 +250,20 @@
                             'PLANNED': '📝 Planea Ver',
                             'WANTS_TO_WATCH': '📝 Planea Ver',
                             'WANTS_TO_READ': '📝 Planea Leer',
-                            'PLAN_TO_READ': '📝 Planea Leer'
+                            'PLAN_TO_READ': '📝 Planea Leer',
+                            'plans to watch': '📝 Planea Ver'
                         };
-
-                        // Intentar obtener el estado mapeado con más flexibilidad
-                        const status = statusMap[activity.status] || statusMap[activity.status?.toUpperCase()] || '🔄 Ha Actualizado';
-                        console.log('Estado mapeado:', status); // Debug line
+                        
+                        // Mostrar el estado raw para debug
+                        const rawStatus = activity.status || 'NO_STATUS';
 
                         html += `
                             <div class="activity-item">
                                 <img class="activity-cover" src="${activity.media.coverImage.large}" alt="${activity.media.title.romaji}">
                                 <div class="activity-content">
                                     <div class="activity-title">${activity.media.title.romaji}</div>
-                                    <div class="activity-status">${status}</div>
+                                    <div class="activity-status">🔄 ${rawStatus}</div>
+                                    <div class="activity-debug" style="font-size: 0.7rem; color: #888;">[Estado API: ${rawStatus}]</div>
                                     <div class="activity-progress">${formatProgress(activity)}</div>
                                     <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
                                 </div>
@@ -295,8 +294,7 @@
             }
         }
 
-        // Iniciar la carga de datos cuando la página esté lista
         document.addEventListener('DOMContentLoaded', fetchAniListData);
     </script>
 </body>
-    </html>
+</html>
