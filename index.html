@@ -234,18 +234,22 @@
         }
 
         .stats-container {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 10px;
-            padding: 15px;
-            margin-bottom: 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 10px;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 2px solid gray;  /* Agregar contorno */
+    font-size: 0.85rem;    /* Reducir tamaño de letra */
+    text-align: center;    /* Centrar el texto */
         }
 
         .activity-item {
-            padding: 15px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            gap: 15px;
-            align-items: start;
+    padding: 15px;
+    border-bottom: 1px solid var(--border-color);
+    display: flex;
+    flex-direction: column;  /* Cambiar a columna para centrar */
+    align-items: center;    /* Centrar elementos */
+    gap: 15px;
         }
 
         .activity-item:last-child {
@@ -260,13 +264,15 @@
         }
 
         .activity-content {
-            flex: 1;
+    flex: 1;
+    text-align: center;  /* Centrar contenido de actividad */
         }
 
         .activity-title {
-            font-weight: 600;
-            margin-bottom: 5px;
-            font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 5px;
+    font-size: 0.9rem;
+    text-align: center;
         }
 
         .activity-status {
