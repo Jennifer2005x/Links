@@ -4,7 +4,7 @@ Pagina De Enlaces De Jenny (Osea Yo), Hecha Con La IA De Github
 
 # Gracias A
 
-[Claude](https://claude.ai/) - Modelo Que Usé
+[Claude](https://claude.ai/) - Modelo Usado
 
 [Iconify](https://icon-sets.iconify.design/) - Iconos SVG
 
