@@ -10,10 +10,12 @@ Pagina De Enlaces De Jenny (Osea Yo), Hecha Con La IA De Github, La Cual Contien
 - Actividad Reciente De AniList
 
 
-# 🙏🏻 Gracias A
+# 🙏🏻 Agradecimientos A
 
 [Claude](https://claude.ai/) - Modelo Usado
 
 [Iconify](https://icon-sets.iconify.design/) - Iconos SVG
+
+[RSSHub](https://rsshub.app/) - RSS Del Canal De Telegram
 
 [NekoBox](https://github.com/RangerDigital/neko-box) - Implementación De AniList
