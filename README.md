@@ -1,6 +1,6 @@
 # Links
 
-Pagina De Enlaces De Jenny (Osea Yo), Hecha Con La IA De Github (Claude)
+Pagina De Enlaces De Jenny (Osea Yo), Hecha Con La IA De Github
 
 # Gracias A
 
