@@ -6,7 +6,7 @@ Pagina De Enlaces De Jenny (Osea Yo), Hecha Con La IA De Github, La Cual Contien
 - Tarjeta Y Botones Outline
 - Modo Claro/Oscuro Automático
 - Foto De Perfil De Github
-- Bonitos Iconos SVG De Acuerdo Al Tema
+- Bonitos Iconos SVG Animados Y Claro/Oscuro Automático
 - Actividad Reciente De AniList
 
 
