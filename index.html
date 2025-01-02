@@ -557,7 +557,7 @@
         async function getLatestActivities(userId) {
             const query = `
                 query ($userId: Int) {
-                    Page(perPage: 5) {
+                    Page(perPage: 1) {
                         activities(userId: $userId, sort: ID_DESC) {
                             ... on ListActivity {
                                 type
