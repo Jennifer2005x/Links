@@ -331,6 +331,30 @@
             color: var(--text-color);
         }
 
+        /* Para los iconos SVG en las actividades */
+.activity-status img,
+.activity-progress img {
+    width: 1em;  /* Mismo tamaño que el texto */
+    height: 1em; /* Mismo tamaño que el texto */
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 2px;
+}
+
+/* Para asegurarnos que los contenedores de iconos mantienen el tamaño correcto */
+.activity-status svg,
+.activity-progress svg {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+}
+        .section-title img.icon-inline {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    display: inline-flex;
+        }
+        
         .section-title {
             font-size: 0.95rem;  
             font-weight: 600;
@@ -357,6 +381,13 @@
             text-align: center;
             padding: 20px;
             font-size: 0.9rem;
+        }
+
+        .icon-inline {
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    display: inline-block;
         }
 
     </style>
@@ -720,8 +751,11 @@
                 const stats = userData.statistics;
 
                 let html = `
-                    <div class="section-title">Estadísticas</div>
-                    <div class="stats-container">
+                      <div class="section-title">
+                      <img src="images/stats.svg" class="icon-inline"> 
+                      Estadísticas
+                      </div>
+                     <div class="stats-container">
                         <div>📺 Anime: ${stats.anime.count} completados</div>
                         <div>⌚ ${Math.floor(stats.anime.minutesWatched / 60)} horas vistas</div>
                         <div>📖 Manga: ${stats.manga.count} completados</div>
