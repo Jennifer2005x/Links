@@ -778,9 +778,32 @@
                 <div class="activity-container">
             `;
 
-            // Rest of the function remains the same
             activities.forEach(activity => {
-                // ... (activity rendering code remains the same)
+                    if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
+                        const progressInfo = formatProgress(activity);
+                        
+                        html += `
+                            <div class="activity-item">
+                                <img class="activity-cover" src="${activity.media.coverImage.large}" alt="${activity.media.title.romaji}">
+                                <div class="activity-content">
+                                    <div class="activity-title">${activity.media.title.romaji}</div>
+                                    <div class="activity-status">${getStatus(activity)}</div>
+                                    ${progressInfo ? `<div class="activity-progress">${progressInfo}</div>` : ''}
+                                    <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
+                                </div>
+                            </div>
+                        `;
+                    } else if (activity.type === 'TEXT') {
+                        html += `
+                            <div class="activity-item">
+                                <div class="activity-content">
+                                    <div class="activity-status">💭 Publicación</div>
+                                    <div class="activity-title">${activity.text}</div>
+                                    <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
+                                </div>
+                            </div>
+                        `;
+                    }
             });
 
             html += `</div>`;
