@@ -673,18 +673,11 @@
                 'completed': '✅ Completado',
                 'watched episode': '👀 Viendo',
                 'read chapter': '📖 Leyendo',
+                'plans to watch': '👀 Planea Ver',
+                'plans to read': '📖 Planea Leer',
                 'paused reading': '⏸️ Manga Pausado',
                 'paused watching': '⏸️ Anime Pausado', 
                 'dropped': '❌ Ha Abandonado'
-            };
-
-            if (status === 'planning' || status === 'plan_to_watch' || status === 'plans to watch') {
-                return activity.type === 'ANIME_LIST' ? '👀 Planea Ver' : '📖 Planea Leer';
-            }
-
-            if (status === 'plan_to_read' || status === 'plans to read') {
-                return '📖 Planea Leer';
-            }
 
             return baseStatusMap[status] || '🔄 Ha Actualizado';
         }
