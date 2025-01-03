@@ -261,7 +261,7 @@
         .stats-container div {
             display: flex;
             align-items: center;
-            gap: 8px;
+            gap: 4px;
             margin-bottom: 8px;
         }
 
@@ -384,11 +384,18 @@
         }
 
         .icon-inline {
-            width: 1em;
-            height: 1em;
-            vertical-align: middle;
-            display: inline-block;
-        }
+    width: 1em;
+    height: 1em;
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 2px; /* Pequeño margen para separación */
+        }    
+
+        .activity-status .icon-inline,
+        .activity-progress .icon-inline {
+    width: 1em;
+    height: 1em;
+}
 
     </style>
 </head>
