@@ -359,6 +359,21 @@
             font-size: 0.9rem;
         }
 
+        .stats-container img,
+        .section-title img {
+        width: 1em;  /* Hace que el icono tenga el mismo tamaño que el texto */
+        height: 1em;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
+    .activity-status img {
+        width: 1em;
+        height: 1em;
+        vertical-align: middle;
+        display: inline-block;
+    }
+
     </style>
 </head>
 <body>
@@ -720,7 +735,9 @@
                 const stats = userData.statistics;
 
                 let html = `
-                    <div class="section-title">📊 Estadísticas</div>
+                    <div class="section-title">
+                    <img src="images/anilist-images/stats.svg" alt="stats icon"> Estadísticas
+                    </div>
                     <div class="stats-container">
                         <div>📺 Anime: ${stats.anime.count} completados</div>
                         <div>⌚ ${Math.floor(stats.anime.minutesWatched / 60)} horas vistas</div>
