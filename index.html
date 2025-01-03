@@ -348,28 +348,29 @@
     height: 1em;
     vertical-align: middle;
 }
-        .section-title img.icon-inline {
+        .section-title {
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    text-align: center;
+    width: 90%;
+    max-width: 400px;
+    margin-left: auto;
+    margin-right: auto;
+    display: flex;          /* Asegura que los elementos estén en línea */
+    align-items: center;    /* Centra verticalmente */
+    justify-content: center; /* Centra horizontalmente */
+    gap: 4px;              /* Controla el espacio entre el icono y el texto */
+}
+
+.section-title img.icon-inline {
     width: 1em;
     height: 1em;
-    vertical-align: middle;
-    display: inline-flex;
-        }
-        
-        .section-title {
-            font-size: 0.95rem;  
-            font-weight: 600;
-            margin-bottom: 8px;
-            text-align: center;  
-            width: 90%;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-        }
-        
+    display: block;        /* Cambiado de inline-flex a block */
+    margin: 0;            /* Elimina cualquier margen */
+    padding: 0;           /* Elimina cualquier padding */
+}
+             
         .section-title svg {
             min-width: 20px;
             display: flex;
@@ -752,7 +753,7 @@
 
                 let html = `
                       <div class="section-title">
-                      <img src="images/stats.svg" class="icon-inline"> 
+                      <img src="images/anilist-images/stats.svg" class="icon-inline"> 
                       Estadísticas
                       </div>
                      <div class="stats-container">
