@@ -259,19 +259,21 @@
         }
         
         .stats-container div {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
+    display: flex;
+    align-items: center;
+    gap: 4px; /* Mismo espaciado que en section-title */
+    margin-bottom: 8px;
         }
 
         .stats-container svg {
-            min-width: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-         }
-
+    min-width: 18px;
+    width: 18px;
+    height: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+        }
+         
         .activity-item {
             padding: 12px;
             border-bottom: 1px solid var(--border-color);
@@ -310,14 +312,13 @@
         }
 
         .activity-status {
-            display: inline-flex;  
-            align-items: center;   
-            gap: 4px;             
-            font-size: 0.8rem;
-            opacity: 0.8;
-            margin-bottom: 2px;
-            color: var(--text-color);
-        }
+    display: inline-flex;
+    align-items: center;
+    gap: 4px; /* Espaciado consistente */
+    font-size: 0.8rem;
+    opacity: 0.8;
+    margin-bottom: 2px;
+    color: var(--text-color);
 
         .activity-progress {
             font-size: 0.8rem; 
@@ -347,15 +348,6 @@
             line-height: 1; 
         }
 
-        .section-title img {
-            width: 18px;
-            height: 18px;
-            display: flex; 
-            align-items: center;
-            margin: 0; 
-            padding: 0; 
-        }
-                
          .section-title svg {
             min-width: 20px;
             display: flex;
@@ -367,6 +359,17 @@
             text-align: center;
             padding: 20px;
             font-size: 0.9rem;
+        }
+
+        .activity-status img, 
+        .stats-container img,
+        .activity-progress img {
+            width: 18px;
+            height: 18px;
+            display: inline-flex;
+            align-items: center;
+            margin: 0;
+            padding: 0;
         }
 
     </style>
@@ -709,14 +712,14 @@
             const status = activity.status.toLowerCase();
             
             const baseStatusMap = {
-                'completed': '<img src="images/anilist-images/complete.svg> Completado',
-                'watched episode': '<img src="images/anilist-images/watch.svg> Viendo',
-                'read chapter': '<img src="images/anilist-images/read.svg> Leyendo',
-                'plans to watch': '<img src="images/anilist-images/watch.svg> Planea Ver',
-                'plans to read': '<img src="images/anilist-images/read.svg> Planea Leer',
-                'paused reading': '<img src="images/anilist-images/pause.svg> Manga Pausado',
-                'paused watching': '<img src="images/anilist-images/pause.svg> Anime Pausado', 
-                'dropped': '<img src="images/anilist-images/dropped.svg> Ha Abandonado',
+                'completed': ' <img src="images/anilist-images/complete.svg> Completado',
+                'watched episode': ' <img src="images/anilist-images/watch.svg> Viendo',
+                'read chapter': ' <img src="images/anilist-images/read.svg> Leyendo',
+                'plans to watch': ' <img src="images/anilist-images/watch.svg> Planea Ver',
+                'plans to read': ' <img src="images/anilist-images/read.svg> Planea Leer',
+                'paused reading': ' <img src="images/anilist-images/pause.svg> Manga Pausado',
+                'paused watching': ' <img src="images/anilist-images/pause.svg> Anime Pausado', 
+                'dropped': ' <img src="images/anilist-images/dropped.svg> Ha Abandonado',
             };
 
             return baseStatusMap[status] || '🔄 Ha Actualizado';
