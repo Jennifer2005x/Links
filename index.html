@@ -709,14 +709,14 @@
             const status = activity.status.toLowerCase();
             
             const baseStatusMap = {
-                'completed': '✅ Completado',
-                'watched episode': '👀 Viendo',
-                'read chapter': '📖 Leyendo',
-                'plans to watch': '👀 Planea Ver',
-                'plans to read': '📖 Planea Leer',
-                'paused reading': '⏸️ Manga Pausado',
-                'paused watching': '⏸️ Anime Pausado', 
-                'dropped': '❌ Ha Abandonado',
+                'completed': '<img src="images/anilist-images/complete.svg> Completado',
+                'watched episode': '<img src="images/anilist-images/watch.svg> Viendo',
+                'read chapter': '<img src="images/anilist-images/read.svg> Leyendo',
+                'plans to watch': '<img src="images/anilist-images/watch.svg> Planea Ver',
+                'plans to read': '<img src="images/anilist-images/read.svg> Planea Leer',
+                'paused reading': '<img src="images/anilist-images/pause.svg> Manga Pausado',
+                'paused watching': '<img src="images/anilist-images/pause.svg> Anime Pausado', 
+                'dropped': '<img src="images/anilist-images/dropped.svg> Ha Abandonado',
             };
 
             return baseStatusMap[status] || '🔄 Ha Actualizado';
@@ -732,10 +732,10 @@
                 let html = `
                     <div class="section-title"> <img src="images/anilist-images/stats.svg"> Estadísticas</div>
                     <div class="stats-container">
-                        <div>📺 Anime: ${stats.anime.count} completados</div>
-                        <div>⌚ ${Math.floor(stats.anime.minutesWatched / 60)} horas vistas</div>
-                        <div>📖 Manga: ${stats.manga.count} completados</div>
-                        <div>📑 ${stats.manga.chaptersRead} capítulos leídos</div>
+                        <div><img src="images/anilist-images/anime.svg> Anime: ${stats.anime.count} completados</div>
+                        <div><img src="images/anilist-images/hours.svg> ${Math.floor(stats.anime.minutesWatched / 60)} horas vistas</div>
+                        <div><img src="images/anilist-images/manga.svg> Manga: ${stats.manga.count} completados</div>
+                        <div><img src="images/anilist-images/caps.svg> ${stats.manga.chaptersRead} capítulos leídos</div>
                     </div>
                     <div class="section-title"> <img src="images/anilist-images/activity.svg"> Actividad Reciente</div>
                 `;
