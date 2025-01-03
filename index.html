@@ -751,21 +751,33 @@
                 const stats = userData.statistics;
 
                 let html = `
-                      <div class="section-title">
-                      <img src="images/anilist-images/stats.svg" class="icon-inline"> 
-                      Estadísticas
-                      </div>
-                     <div class="stats-container">
-                        <div>• Anime: ${stats.anime.count} Completados</div>
-                        <div>• ${Math.floor(stats.anime.minutesWatched / 60)} Horas Vistas</div>
-                        <div>• Manga: ${stats.manga.count} Completados</div>
-                        <div>• ${stats.manga.chaptersRead} Capítulos Leídos</div>
-                    </div>
-                    <div class="section-title">
-                      <img src="images/anilist-images/activity.svg" class="icon-inline"> 
-                      Actividad Reciente
-                      </div>
-                `;
+                <div class="section-title">
+                <img src="images/anilist-images/stats.svg" class="icon-inline">
+                Estadísticas
+              </div>
+               <div class="stats-container">
+              <div>
+                <img src="images/anilist-images/anime.svg" class="icon-inline">
+                Anime: ${stats.anime.count} completados
+              </div>
+            <div>
+            <img src="images/anilist-images/hours.svg" class="icon-inline">
+            ${Math.floor(stats.anime.minutesWatched / 60)} horas vistas
+        </div>
+        <div>
+            <img src="images/anilist/images/manga.svg" class="icon-inline">
+            Manga: ${stats.manga.count} completados
+        </div>
+        <div>
+            <img src="images/anilist-images/caps.svg" class="icon-inline">
+            ${stats.manga.chaptersRead} capítulos leídos
+        </div>
+    </div>
+    <div class="section-title">
+        <img src="images/anilist-images/activity.svg" class="icon-inline">
+        Actividad Reciente
+    </div>
+`;
 
                 activities.forEach(activity => {
                     if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
