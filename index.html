@@ -316,7 +316,12 @@
     margin-bottom: 2px;
     color: var(--text-color);
     height: 20px;
-    margin-left: -2px;  /* Para alinear con el título */
+}
+
+.activity-status span {
+    display: flex;
+    align-items: center;
+    line-height: 1;
 }
 
 .status-icon {
@@ -326,6 +331,8 @@
     width: 20px;
     height: 20px;
     flex: 0 0 20px;
+    line-height: 1;
+    padding-top: 1px; /* Ajuste fino para el centrado vertical */
 }
 
 .status-icon img {
@@ -333,8 +340,9 @@
     height: 14px;
     display: block;
     margin: auto;
+    vertical-align: middle;
 }
-
+        
 .activity-progress {
     display: flex;
     align-items: center;
@@ -380,7 +388,10 @@
         }
 
         .activity-content {
-            flex: 1;
+    flex: 1;
+    min-height: 65px;
+    display: flex;
+    flex-direction: column;
         }
 
         .activity-title {
@@ -388,7 +399,6 @@
     margin-bottom: 4px;
     font-size: 0.85rem;  
     color: var(--text-color);
-    margin-left: -2px;  /* Para mantener consistencia con el status */
         }
     
         .activity-timestamp {
@@ -769,7 +779,7 @@
             },
             'plans to read': {
                 text: 'Planea Leer',
-                icon: 'images/anilist-images/read.svg'
+                icon: '/images/anilist-images/read.svg'
             },
             'paused reading': {
                 text: 'Manga Pausado',
