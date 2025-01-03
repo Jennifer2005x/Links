@@ -178,20 +178,22 @@
         .card {
             background-color: var(--link-bg);
             color: var(--text-color);
-            padding: 15px;
-            border-radius: 10px;
-            margin-top: 10px;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 8px;
             text-align: center;
             border: 2px solid var(--border-color);
-            width: 90%;
-            max-width: 400px;
+            width: 70%;
+            max-width: 300px;
             margin-left: auto;
             margin-right: auto;
-            transition: background-color 0.3s ease;  
+            transition: background-color 0.3s ease;
+            pointer-events: none; /* Hace que no sea interactiva */
+            user-select: none; /* Previene la selección de texto */
         }
 
          .card:hover {
-            background-color: var(--link-hover);
+            background-color: var(--link-bg);
         }
          
          .card img {
