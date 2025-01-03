@@ -652,7 +652,6 @@
             
             const status = activity.status.toLowerCase();
             
-            // Solo mostrar progreso si está viendo o leyendo
             if (status === 'watched episode' || status === 'read chapter') {
                 const total = activity.media.episodes || activity.media.chapters || '?';
                 const current = activity.progress || 0;
@@ -740,7 +739,6 @@
             }
         }
 
-        // Iniciar la carga de datos cuando la página esté lista
         document.addEventListener('DOMContentLoaded', fetchAniListData);
 
     </script>
