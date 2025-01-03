@@ -258,13 +258,12 @@
             color: var(--text-color);
         }
         
-        .stats-container div {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-bottom: 8px;
-        }
-
+         .stats-container div {
+        display: flex;
+        align-items: center;
+        gap: 12px;  /* Increased gap for SVG icons */
+         }
+        
         .stats-container svg {
             min-width: 20px;
             display: flex;
@@ -272,19 +271,24 @@
             justify-content: center;
          }
 
+           .stats-icon {
+        width: 20px;
+        height: 20px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+           }
+
         .activity-item {
-            padding: 12px;
-            border-bottom: 1px solid var(--border-color);
-            display: flex;
-            gap: 10px;
-            align-items: center;
-            width: 90%;
-            max-width: 400px;
-            margin-left: auto;
-            margin-right: auto;
-            background-color: var(--link-bg); 
-            border-radius: 10px;
-            margin-bottom: 8px;
+        padding: 12px;
+        border: 1px solid var(--border-color);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        width: calc(100% - 24px);  /* Adjusted width accounting for padding */
+        background-color: var(--link-bg); 
+        border-radius: 10px;
+        margin-bottom: 8px;
         }
 
         .activity-item:last-child {
@@ -329,6 +333,18 @@
             opacity: 0.6;
             margin-top: 4px;
             color: var(--text-color);
+        }
+
+        .activity-container {
+        background-color: var(--link-bg);
+        border: 2px solid var(--border-color);
+        border-radius: 10px;
+        padding: 15px;
+        margin-bottom: 20px;
+        width: 90%;
+        max-width: 400px;
+        margin-left: auto;
+        margin-right: auto;
         }
 
         .section-title {
@@ -713,61 +729,75 @@
         }
 
         async function fetchAniListData() {
-            try {
-                const cardContent = document.getElementById('anilist-card');
-                const userData = await getUserId("Jennifer2005x");
-                const activities = await getLatestActivities(userData.id);
-                const stats = userData.statistics;
+        try {
+            const cardContent = document.getElementById('anilist-card');
+            const userData = await getUserId("Jennifer2005x");
+            const activities = await getLatestActivities(userData.id);
+            const stats = userData.statistics;
 
-                let html = `
-                    <div class="section-title">📊 Estadísticas</div>
-                    <div class="stats-container">
-                        <div>📺 Anime: ${stats.anime.count} completados</div>
-                        <div>⌚ ${Math.floor(stats.anime.minutesWatched / 60)} horas vistas</div>
-                        <div>📖 Manga: ${stats.manga.count} completados</div>
-                        <div>📑 ${stats.manga.chaptersRead} capítulos leídos</div>
+            let html = `
+                <div class="section-title"><img src="images/anilist-images/stats.svg"> Estadísticas</div>
+                <div class="stats-container">
+                    <div>
+                        <span class="stats-icon"><img src="images/anilist-images/anime.svg"></span>
+                        Anime: ${stats.anime.count} completados
                     </div>
-                    <div class="section-title">🔄 Actividad Reciente</div>
-                `;
-
-                activities.forEach(activity => {
-                    if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
-                        const progressInfo = formatProgress(activity);
-                        
-                        html += `
-                            <div class="activity-item">
-                                <img class="activity-cover" src="${activity.media.coverImage.large}" alt="${activity.media.title.romaji}">
-                                <div class="activity-content">
-                                    <div class="activity-title">${activity.media.title.romaji}</div>
-                                    <div class="activity-status">${getStatus(activity)}</div>
-                                    ${progressInfo ? `<div class="activity-progress">${progressInfo}</div>` : ''}
-                                    <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
-                                </div>
-                            </div>
-                        `;
-                    } else if (activity.type === 'TEXT') {
-                        html += `
-                            <div class="activity-item">
-                                <div class="activity-content">
-                                    <div class="activity-status">💭 Publicación</div>
-                                    <div class="activity-title">${activity.text}</div>
-                                    <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-
-                cardContent.innerHTML = html;
-
-            } catch (error) {
-                document.getElementById('anilist-card').innerHTML = `
-                    <div class="loading">
-                        ❌ Error al cargar los datos de AniList
+                    <div>
+                        <span class="stats-icon"><img src="images/anilist-images/time.svg"></span>
+                        ${Math.floor(stats.anime.minutesWatched / 60)} horas vistas
                     </div>
-                `;
-            }
+                    <div>
+                        <span class="stats-icon"><img src="images/anilist-images/manga.svg"></span>
+                        Manga: ${stats.manga.count} completados
+                    </div>
+                    <div>
+                        <span class="stats-icon"><img src="images/anilist-images/chapters.svg"></span>
+                        ${stats.manga.chaptersRead} capítulos leídos
+                    </div>
+                </div>
+                <div class="section-title"><img src="images/anilist-images/activity.svg"> Actividad Reciente</div>
+                <div class="activity-container">
+            `;
+
+            activities.forEach(activity => {
+                if (activity.type === 'ANIME_LIST' || activity.type === 'MANGA_LIST') {
+                    const progressInfo = formatProgress(activity);
+                    
+                    html += `
+                        <div class="activity-item">
+                            <img class="activity-cover" src="${activity.media.coverImage.large}" alt="${activity.media.title.romaji}">
+                            <div class="activity-content">
+                                <div class="activity-title">${activity.media.title.romaji}</div>
+                                <div class="activity-status">${getStatus(activity)}</div>
+                                ${progressInfo ? `<div class="activity-progress">${progressInfo}</div>` : ''}
+                                <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
+                            </div>
+                        </div>
+                    `;
+                } else if (activity.type === 'TEXT') {
+                    html += `
+                        <div class="activity-item">
+                            <div class="activity-content">
+                                <div class="activity-status">💭 Publicación</div>
+                                <div class="activity-title">${activity.text}</div>
+                                <div class="activity-timestamp">${formatTimestamp(activity.createdAt)}</div>
+                            </div>
+                        </div>
+                    `;
+                }
+            });
+
+            html += `</div>`; // Close activity-container
+            cardContent.innerHTML = html;
+
+        } catch (error) {
+            document.getElementById('anilist-card').innerHTML = `
+                <div class="loading">
+                    ❌ Error al cargar los datos de AniList
+                </div>
+            `;
         }
+    }
 
         document.addEventListener('DOMContentLoaded', fetchAniListData);
 
