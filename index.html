@@ -247,22 +247,24 @@
         .stats-container {
             background-color: var(--link-bg);
             border-radius: 10px;
-            padding: 12px;
+            padding: 8px;
             margin-bottom: 20px;
-            border: 2px solid var(--border-color); 
+            border: 1px solid var(--border-color); 
             font-size: 0.9rem;
-            width: 90%;
-            max-width: 400px;
+            width: 80%;
+            max-width: 300px;
             margin-left: auto;
             margin-right: auto;
             color: var(--text-color);
+            pointer-events: none;
         }
         
         .stats-container div {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 8px;
+            font-size: 0.8rem;
+            margin-bottom: 6px;
         }
 
         .stats-container svg {
@@ -273,13 +275,14 @@
          }
 
         .activity-item {
-            padding: 12px;
+            padding: 8px;
             border-bottom: 2px solid var(--border-color);
             display: flex;
             gap: 10px;
             align-items: center;
-            width: 90%;
-            max-width: 400px;
+            width: 80%;
+            max-width: 300px;
+            pointer-events: none;
             margin-left: auto;
             margin-right: auto;
             background-color: var(--link-bg); 
@@ -292,8 +295,8 @@
         }
 
         .activity-cover {
-            width: 45px;  
-            height: 65px;  
+            width: 35px;  
+            height: 50px;  
             border-radius: 8px;
             object-fit: cover;
         }
@@ -305,7 +308,7 @@
         .activity-title {
             font-weight: 600;
             margin-bottom: 4px;
-            font-size: 0.85rem;  
+            font-size: 0.7rem;  
             color: var(--text-color);
         }
 
@@ -313,7 +316,7 @@
             display: inline-flex;  
             align-items: center;   
             gap: 4px;             
-            font-size: 0.8rem;
+            font-size: 0.7rem;
             opacity: 0.8;
             margin-bottom: 2px;
             color: var(--text-color);
@@ -325,7 +328,7 @@
         }
 
         .activity-timestamp {
-            font-size: 0.7rem; 
+            font-size: 0.65rem; 
             opacity: 0.6;
             margin-top: 4px;
             color: var(--text-color);
@@ -348,12 +351,12 @@
         }
         
         .section-title {
-          font-size: 0.95rem;
+          font-size: 0.85rem;
           font-weight: 600;
           margin-bottom: 8px;
           text-align: center;
-          width: 90%;
-          max-width: 400px;
+          width: 80%;
+          max-width: 300px;
           margin-left: auto;
           margin-right: auto;
           display: flex;         
