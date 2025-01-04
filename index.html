@@ -722,7 +722,7 @@
                 const total = activity.media.episodes || activity.media.chapters || '?';
                 const current = activity.progress || 0;
                 
-                const type = activity.type === 'ANIME_LIST' ? '📺' : '📖';
+                const type = activity.type === 'ANIME_LIST' ? '🎬' : '📕';
                 const unit = activity.type === 'ANIME_LIST' ? 'Episodio' : 'Capítulo';
                 
                 return `${type} ${unit} ${current}${total !== '?' ? ` de ${total}` : ''}`;
@@ -738,8 +738,8 @@
                 'completed': '✅ Completado',
                 'watched episode': '👀 Viendo',
                 'read chapter': '📖 Leyendo',
-                'plans to watch': '👀 Planea Ver',
-                'plans to read': '📖 Planea Leer',
+                'plans to watch': '👁️ Planeado Ver',
+                'plans to read': '📚 Planeado Leer',
                 'paused reading': '⏸️ Manga Pausado',
                 'paused watching': '⏸️ Anime Pausado', 
                 'dropped': '❌ Ha Abandonado',
